@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.SentimentDissatisfied
 import androidx.compose.material.icons.filled.SentimentSatisfied
 import androidx.compose.material.icons.filled.SentimentVeryDissatisfied
 import androidx.compose.material.icons.filled.SentimentVerySatisfied
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -51,6 +52,7 @@ import com.experimentos.mobile.shared.presentation.BrandCircleIcon
 import com.experimentos.mobile.shared.presentation.ErrorState
 import com.experimentos.mobile.shared.presentation.LocalAppStrings
 import com.experimentos.mobile.shared.presentation.SafeSpaceTopBar
+import com.experimentos.mobile.shared.presentation.SafeSpaceTopBarAction
 import com.experimentos.mobile.shared.presentation.WelcomeRow
 
 @Composable
@@ -75,6 +77,13 @@ fun HomeScreen(
             SafeSpaceTopBar(
                 title = "SafeSpace",
                 leadingContent = { BrandCircleIcon() },
+                action = {
+                    SafeSpaceTopBarAction(
+                        contentDescription = strings.t("Actualizar inicio"),
+                        onClick = homeViewModel::loadToday,
+                        icon = Icons.Default.Refresh,
+                    )
+                },
             )
         }
     ) { innerPadding ->

@@ -217,6 +217,7 @@ class AppStrings(val language: AppLanguage) {
             "Contenido del equipo" to "Team content",
             "Crea contenido y revisa el estado de tus encuestas y actividades." to
                 "Create content and review the status of your surveys and activities.",
+            "Actualizar inicio" to "Refresh home",
             "Actualizar contenido" to "Refresh content",
             "Actualizar resumen" to "Refresh summary",
             "Los borradores se pueden publicar y las publicadas se pueden cerrar." to

@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Event
 import androidx.compose.material.icons.filled.Poll
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -51,6 +52,7 @@ import com.experimentos.mobile.shared.presentation.ErrorState
 import com.experimentos.mobile.shared.presentation.LoadingState
 import com.experimentos.mobile.shared.presentation.LocalAppStrings
 import com.experimentos.mobile.shared.presentation.SafeSpaceTopBar
+import com.experimentos.mobile.shared.presentation.SafeSpaceTopBarAction
 import com.experimentos.mobile.shared.presentation.SectionCard
 import com.experimentos.mobile.shared.presentation.SoftTag
 import com.experimentos.mobile.survey.data.SurveyApi
@@ -88,6 +90,10 @@ fun SurveysScreen(
     )
     val activityState by activityViewModel.state.collectAsStateWithLifecycle()
     var destination by rememberSaveable(sessionKey) { mutableStateOf(HUB_DESTINATION) }
+    val refreshContent = {
+        surveyViewModel.load()
+        activityViewModel.load()
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -95,6 +101,13 @@ fun SurveysScreen(
             if (destination == HUB_DESTINATION) {
                 SafeSpaceTopBar(
                     title = "Encuestas",
+                    action = {
+                        SafeSpaceTopBarAction(
+                            contentDescription = strings.t("Actualizar contenido"),
+                            onClick = refreshContent,
+                            icon = Icons.Default.Refresh,
+                        )
+                    },
                 )
             } else {
                 SafeSpaceTopBar(
@@ -106,6 +119,13 @@ fun SurveysScreen(
                     navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
                     navigationContentDescription = "Regresar al Centro de Encuestas",
                     onNavigationClick = { destination = HUB_DESTINATION },
+                    action = {
+                        SafeSpaceTopBarAction(
+                            contentDescription = strings.t("Actualizar contenido"),
+                            onClick = refreshContent,
+                            icon = Icons.Default.Refresh,
+                        )
+                    },
                 )
             }
         },
