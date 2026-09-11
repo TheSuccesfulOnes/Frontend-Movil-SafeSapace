@@ -47,7 +47,7 @@ import com.experimentos.mobile.survey.presentation.SurveysScreen
 private enum class EmployeeScreen(val label: String) {
     HOME("Inicio"),
     SURVEYS("Encuestas"),
-    AI("Chat IA"),
+    AI("Chat AI"),
     PROFILE("Perfil"),
 }
 
