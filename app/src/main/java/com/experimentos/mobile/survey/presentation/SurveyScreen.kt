@@ -213,7 +213,6 @@ private fun SurveyHubContent(
                 status = dailyStatus,
                 title = "Encuestas diarias",
                 description = "Breve chequeo de tu estado de ánimo y niveles de energía hoy. Toma menos de un minuto.",
-                actionLabel = "Comenzar ahora",
                 onOpen = onOpenDaily,
             )
         }
@@ -224,7 +223,6 @@ private fun SurveyHubContent(
                 status = weeklyStatus,
                 title = "Actividades semanales",
                 description = "Participa en votaciones y elige las actividades que más te interesen.",
-                actionLabel = "Ver actividades",
                 onOpen = onOpenWeekly,
             )
         }
@@ -249,11 +247,11 @@ private fun SurveyCategoryCard(
     status: String,
     title: String,
     description: String,
-    actionLabel: String,
     onOpen: () -> Unit,
 ) {
     val strings = LocalAppStrings.current
     Card(
+        onClick = onOpen,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
@@ -290,9 +288,6 @@ private fun SurveyCategoryCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodyMedium,
                 )
-            }
-            TextButton(onClick = onOpen) {
-                Text("${strings.t(actionLabel)}  →")
             }
         }
     }
