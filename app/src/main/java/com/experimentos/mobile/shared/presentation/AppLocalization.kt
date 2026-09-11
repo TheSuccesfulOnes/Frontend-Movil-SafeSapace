@@ -19,6 +19,11 @@ class AppStrings(val language: AppLanguage) {
 
     fun languageLabel(): String = if (isEnglish) "English" else "Español"
 
+    fun replyCountLabel(count: Int): String {
+        val template = t(if (count == 1) "Ver {count} respuesta" else "Ver {count} respuestas")
+        return template.replace("{count}", count.toString())
+    }
+
     fun roleLabel(role: String): String = when (role) {
         "EMPLOYEE" -> t("Empleado")
         "HR_MEMBER" -> t("Miembro de Recursos Humanos")
@@ -202,6 +207,10 @@ class AppStrings(val language: AppLanguage) {
             "Publicar comentario" to "Post comment",
             "Cerrar" to "Close",
             "Responder" to "Reply",
+            "Respuesta" to "Reply",
+            "Ver {count} respuesta" to "View {count} reply",
+            "Ver {count} respuestas" to "View {count} replies",
+            "Ocultar respuestas" to "Hide replies",
             "Respuesta anónima" to "Anonymous reply",
             "Escribe una respuesta..." to "Write a reply...",
             "Publicar respuesta" to "Post reply",

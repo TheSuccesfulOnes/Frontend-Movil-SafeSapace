@@ -7,17 +7,25 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Reply
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Poll
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -28,7 +36,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -536,29 +544,71 @@ private fun CommentItem(
     val strings = LocalAppStrings.current
     var replyText by rememberSaveable(comment.id) { mutableStateOf("") }
     var replying by rememberSaveable(comment.id) { mutableStateOf(false) }
+    var repliesExpanded by rememberSaveable(comment.id) { mutableStateOf(false) }
     Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(6.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.52f),
-            shape = RoundedCornerShape(14.dp),
+            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.38f),
+            shape = RoundedCornerShape(
+                topStart = 18.dp,
+                topEnd = 18.dp,
+                bottomEnd = 18.dp,
+                bottomStart = 6.dp,
+            ),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.28f)),
         ) {
-            Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(comment.content)
-                Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    TextButton(
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    CommentActionButton(
+                        icon = Icons.Default.FavoriteBorder,
+                        label = comment.likes.toString(),
+                        tint = MaterialTheme.colorScheme.secondary,
                         onClick = { onLike(surveyId, comment.id) },
                         enabled = !isSubmitting,
-                    ) {
-                        Text("♡ ${comment.likes}")
-                    }
-                    TextButton(
+                    )
+                    CommentActionButton(
+                        icon = Icons.AutoMirrored.Filled.Reply,
+                        label = strings.t(if (replying) "Cerrar" else "Responder"),
+                        tint = MaterialTheme.colorScheme.primary,
                         onClick = { replying = !replying },
                         enabled = !isSubmitting,
+                    )
+                }
+                if (comment.replies.isNotEmpty()) {
+                    OutlinedButton(
+                        onClick = { repliesExpanded = !repliesExpanded },
+                        enabled = !isSubmitting,
+                        modifier = Modifier.height(34.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        ),
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                     ) {
-                        Text(strings.t(if (replying) "Cerrar" else "Responder"))
+                        Icon(
+                            imageVector = if (repliesExpanded) {
+                                Icons.Default.ExpandLess
+                            } else {
+                                Icons.Default.ExpandMore
+                            },
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp),
+                        )
+                        Text(
+                            text = if (repliesExpanded) {
+                                strings.t("Ocultar respuestas")
+                            } else {
+                                strings.replyCountLabel(comment.replies.size)
+                            },
+                        )
                     }
                 }
             }
@@ -579,6 +629,7 @@ private fun CommentItem(
                     onReply(surveyId, replyText, comment.id)
                     replyText = ""
                     replying = false
+                    repliesExpanded = true
                 },
                 enabled = replyText.isNotBlank() && !isSubmitting,
                 modifier = Modifier.padding(start = 16.dp),
@@ -586,18 +637,88 @@ private fun CommentItem(
                 Text(strings.t("Publicar respuesta"))
             }
         }
-        comment.replies.forEach { reply ->
-            Surface(
-                modifier = Modifier.padding(start = 16.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(12.dp),
+        if (repliesExpanded && comment.replies.isNotEmpty()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(9.dp),
+                verticalAlignment = Alignment.Top,
             ) {
-                Text(
-                    text = reply.content,
-                    modifier = Modifier.padding(12.dp),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                Surface(
+                    modifier = Modifier
+                        .width(2.dp)
+                        .heightIn(min = 42.dp),
+                    color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.65f),
+                    shape = RoundedCornerShape(50),
+                ) {}
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    comment.replies.forEach { reply ->
+                        ReplyBubble(reply)
+                    }
+                }
             }
+        }
+    }
+}
+
+@Composable
+private fun CommentActionButton(
+    icon: ImageVector,
+    label: String,
+    tint: Color,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = Modifier.height(34.dp),
+        shape = RoundedCornerShape(10.dp),
+        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 0.dp),
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.55f),
+            contentColor = tint,
+        ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(16.dp))
+        Text(text = label, fontWeight = FontWeight.SemiBold)
+    }
+}
+
+@Composable
+private fun ReplyBubble(reply: CommentResponse) {
+    val strings = LocalAppStrings.current
+    Surface(
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.72f),
+        shape = RoundedCornerShape(
+            topStart = 6.dp,
+            topEnd = 16.dp,
+            bottomEnd = 16.dp,
+            bottomStart = 16.dp,
+        ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 13.dp, vertical = 11.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+        ) {
+            Text(
+                text = strings.t("Respuesta"),
+                color = MaterialTheme.colorScheme.secondary,
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = reply.content,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodyMedium,
+            )
         }
     }
 }
