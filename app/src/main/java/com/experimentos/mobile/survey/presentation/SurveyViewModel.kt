@@ -141,6 +141,26 @@ class SurveyViewModel(
                         isSubmitting = false,
                         errorMessage = error.toUserMessage("No se pudo marcar el comentario."),
                     )
+            }
+        }
+    }
+
+    fun deleteComment(surveyId: Long, commentId: Long) {
+        viewModelScope.launch {
+            mutableState.value = mutableState.value.copy(isSubmitting = true, errorMessage = null)
+            runCatching { commentApi.delete(surveyId, commentId) }
+                .onSuccess {
+                    refreshComments(surveyId)
+                    mutableState.value = mutableState.value.copy(
+                        isSubmitting = false,
+                        message = "Comentario eliminado.",
+                    )
+                }
+                .onFailure { error ->
+                    mutableState.value = mutableState.value.copy(
+                        isSubmitting = false,
+                        errorMessage = error.toUserMessage("No se pudo eliminar el comentario."),
+                    )
                 }
         }
     }

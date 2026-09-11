@@ -93,6 +93,8 @@ class AppStrings(val language: AppLanguage) {
         message == "Escribe un título y al menos dos opciones." -> "Enter a title and at least two options."
         message == "Actividad creada y abierta para votación." -> "Activity created and open for voting."
         message == "Actividad cerrada." -> "Activity closed."
+        message == "Comentario eliminado." -> "Comment deleted."
+        message == "No se pudo eliminar el comentario." -> "The comment could not be deleted."
         message == "No se pudo crear la encuesta." -> "The survey could not be created."
         message == "No se pudo cambiar el estado de la encuesta." -> "The survey status could not be changed."
         message == "No se pudo crear la actividad." -> "The activity could not be created."
@@ -202,15 +204,16 @@ class AppStrings(val language: AppLanguage) {
             "Comentarios anónimos" to "Anonymous comments",
             "Ocultar" to "Hide",
             "Ver comentarios" to "View comments",
-            "Comentario anónimo" to "Anonymous comment",
             "Comparte tu experiencia..." to "Share your experience...",
-            "Publicar comentario" to "Post comment",
+            "Enviar comentario" to "Send comment",
+            "Eliminar comentario" to "Delete comment",
+            "Esta acción no se puede deshacer." to "This action cannot be undone.",
             "Cerrar" to "Close",
             "Responder" to "Reply",
             "Respuesta" to "Reply",
             "Ver {count} respuesta" to "View {count} reply",
             "Ver {count} respuestas" to "View {count} replies",
-            "Ocultar respuestas" to "Hide replies",
+            "Cerrar respuestas" to "Close replies",
             "Respuesta anónima" to "Anonymous reply",
             "Escribe una respuesta..." to "Write a reply...",
             "Publicar respuesta" to "Post reply",

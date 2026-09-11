@@ -1,7 +1,9 @@
 package com.experimentos.mobile.survey.presentation
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,6 +20,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Reply
+import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Event
@@ -29,13 +33,16 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -146,6 +153,7 @@ fun SurveysScreen(
                 onToggleComments = surveyViewModel::toggleComments,
                 onComment = surveyViewModel::createComment,
                 onLike = surveyViewModel::likeComment,
+                onDelete = surveyViewModel::deleteComment,
                 contentPadding = innerPadding,
             )
 
@@ -308,6 +316,7 @@ private fun DailySurveysContent(
     onToggleComments: (Long) -> Unit,
     onComment: (Long, String, Long?) -> Unit,
     onLike: (Long, Long) -> Unit,
+    onDelete: (Long, Long) -> Unit,
     contentPadding: PaddingValues,
 ) {
     val strings = LocalAppStrings.current
@@ -344,6 +353,7 @@ private fun DailySurveysContent(
                     onToggleComments = onToggleComments,
                     onComment = onComment,
                     onLike = onLike,
+                    onDelete = onDelete,
                 )
             }
         }
@@ -433,6 +443,7 @@ private fun SurveyCard(
     onToggleComments: (Long) -> Unit,
     onComment: (Long, String, Long?) -> Unit,
     onLike: (Long, Long) -> Unit,
+    onDelete: (Long, Long) -> Unit,
 ) {
     val strings = LocalAppStrings.current
     var answerText by rememberSaveable(survey.id) { mutableStateOf("") }
@@ -499,25 +510,15 @@ private fun SurveyCard(
                 }
                 if (state.expandedSurveyId == survey.id) {
                     HorizontalDivider()
-                    OutlinedTextField(
+                    CommentComposer(
                         value = commentText,
                         onValueChange = { commentText = it.take(1000) },
-                        modifier = Modifier.fillMaxWidth(),
-                        label = { Text(strings.t("Comentario anónimo")) },
-                        placeholder = { Text(strings.t("Comparte tu experiencia...")) },
-                        supportingText = { Text("${commentText.length}/1000") },
-                        minLines = 2,
-                    )
-                    Button(
-                        onClick = {
+                        enabled = commentText.isNotBlank() && !state.isSubmitting,
+                        onSubmit = {
                             onComment(survey.id, commentText, null)
                             commentText = ""
                         },
-                        enabled = commentText.isNotBlank() && !state.isSubmitting,
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(strings.t("Publicar comentario"))
-                    }
+                    )
                     state.comments[survey.id].orEmpty().forEach { comment ->
                         CommentItem(
                             surveyId = survey.id,
@@ -525,6 +526,7 @@ private fun SurveyCard(
                             isSubmitting = state.isSubmitting,
                             onLike = onLike,
                             onReply = onComment,
+                            onDelete = onDelete,
                         )
                     }
                 }
@@ -540,11 +542,13 @@ private fun CommentItem(
     isSubmitting: Boolean,
     onLike: (Long, Long) -> Unit,
     onReply: (Long, String, Long?) -> Unit,
+    onDelete: (Long, Long) -> Unit,
 ) {
     val strings = LocalAppStrings.current
     var replyText by rememberSaveable(comment.id) { mutableStateOf("") }
     var replying by rememberSaveable(comment.id) { mutableStateOf(false) }
     var repliesExpanded by rememberSaveable(comment.id) { mutableStateOf(false) }
+    var showDeleteConfirmation by rememberSaveable(comment.id) { mutableStateOf(false) }
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -580,6 +584,12 @@ private fun CommentItem(
                         onClick = { replying = !replying },
                         enabled = !isSubmitting,
                     )
+                    if (comment.canDelete) {
+                        DeleteCommentButton(
+                            onClick = { showDeleteConfirmation = true },
+                            enabled = !isSubmitting,
+                        )
+                    }
                 }
                 if (comment.replies.isNotEmpty()) {
                     OutlinedButton(
@@ -604,7 +614,7 @@ private fun CommentItem(
                         )
                         Text(
                             text = if (repliesExpanded) {
-                                strings.t("Ocultar respuestas")
+                                strings.t("Cerrar respuestas")
                             } else {
                                 strings.replyCountLabel(comment.replies.size)
                             },
@@ -657,12 +667,76 @@ private fun CommentItem(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     comment.replies.forEach { reply ->
-                        ReplyBubble(reply)
+                        ReplyBubble(
+                            surveyId = surveyId,
+                            reply = reply,
+                            isSubmitting = isSubmitting,
+                            onDelete = onDelete,
+                        )
                     }
                 }
             }
         }
     }
+    if (showDeleteConfirmation) {
+        DeleteCommentDialog(
+            isSubmitting = isSubmitting,
+            onDismiss = { showDeleteConfirmation = false },
+            onConfirm = {
+                showDeleteConfirmation = false
+                onDelete(surveyId, comment.id)
+            },
+        )
+    }
+}
+
+@Composable
+private fun CommentComposer(
+    value: String,
+    onValueChange: (String) -> Unit,
+    enabled: Boolean,
+    onSubmit: () -> Unit,
+) {
+    val strings = LocalAppStrings.current
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        modifier = Modifier.fillMaxWidth(),
+        placeholder = { Text(strings.t("Comparte tu experiencia...")) },
+        supportingText = { Text("${value.length}/1000") },
+        minLines = 1,
+        maxLines = 4,
+        trailingIcon = {
+            IconButton(
+                onClick = onSubmit,
+                enabled = enabled,
+                modifier = Modifier.padding(end = 6.dp),
+            ) {
+                Surface(
+                    modifier = Modifier.size(34.dp),
+                    shape = CircleShape,
+                    color = if (enabled) {
+                        MaterialTheme.colorScheme.primary
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    },
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.Send,
+                            contentDescription = strings.t("Enviar comentario"),
+                            tint = if (enabled) {
+                                MaterialTheme.colorScheme.onPrimary
+                            } else {
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            },
+                            modifier = Modifier.size(17.dp),
+                        )
+                    }
+                }
+            }
+        },
+    )
 }
 
 @Composable
@@ -691,8 +765,40 @@ private fun CommentActionButton(
 }
 
 @Composable
-private fun ReplyBubble(reply: CommentResponse) {
+private fun DeleteCommentButton(
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
     val strings = LocalAppStrings.current
+    OutlinedButton(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = Modifier.size(34.dp),
+        shape = RoundedCornerShape(10.dp),
+        contentPadding = PaddingValues(0.dp),
+        colors = ButtonDefaults.outlinedButtonColors(
+            containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.55f),
+            contentColor = MaterialTheme.colorScheme.error,
+        ),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.error.copy(alpha = 0.35f)),
+    ) {
+        Icon(
+            imageVector = Icons.Default.DeleteOutline,
+            contentDescription = strings.t("Eliminar"),
+            modifier = Modifier.size(16.dp),
+        )
+    }
+}
+
+@Composable
+private fun ReplyBubble(
+    surveyId: Long,
+    reply: CommentResponse,
+    isSubmitting: Boolean,
+    onDelete: (Long, Long) -> Unit,
+) {
+    val strings = LocalAppStrings.current
+    var showDeleteConfirmation by rememberSaveable(reply.id) { mutableStateOf(false) }
     Surface(
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.72f),
@@ -708,12 +814,24 @@ private fun ReplyBubble(reply: CommentResponse) {
             modifier = Modifier.padding(horizontal = 13.dp, vertical = 11.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp),
         ) {
-            Text(
-                text = strings.t("Respuesta"),
-                color = MaterialTheme.colorScheme.secondary,
-                style = MaterialTheme.typography.labelSmall,
-                fontWeight = FontWeight.SemiBold,
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = strings.t("Respuesta"),
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                if (reply.canDelete) {
+                    DeleteCommentButton(
+                        onClick = { showDeleteConfirmation = true },
+                        enabled = !isSubmitting,
+                    )
+                }
+            }
             Text(
                 text = reply.content,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -721,4 +839,38 @@ private fun ReplyBubble(reply: CommentResponse) {
             )
         }
     }
+    if (showDeleteConfirmation) {
+        DeleteCommentDialog(
+            isSubmitting = isSubmitting,
+            onDismiss = { showDeleteConfirmation = false },
+            onConfirm = {
+                showDeleteConfirmation = false
+                onDelete(surveyId, reply.id)
+            },
+        )
+    }
+}
+
+@Composable
+private fun DeleteCommentDialog(
+    isSubmitting: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+) {
+    val strings = LocalAppStrings.current
+    AlertDialog(
+        onDismissRequest = { if (!isSubmitting) onDismiss() },
+        title = { Text(strings.t("Eliminar comentario")) },
+        text = { Text(strings.t("Esta acción no se puede deshacer.")) },
+        confirmButton = {
+            TextButton(onClick = onConfirm, enabled = !isSubmitting) {
+                Text(strings.t("Eliminar"), color = MaterialTheme.colorScheme.error)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss, enabled = !isSubmitting) {
+                Text(strings.t("Cancelar"))
+            }
+        },
+    )
 }
