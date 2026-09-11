@@ -636,11 +636,10 @@ private fun CommentItem(
             )
             Button(
                 onClick = {
-                    onReply(surveyId, replyText, comment.id)
-                    replyText = ""
-                    replying = false
-                    repliesExpanded = true
-                },
+            onReply(surveyId, replyText, comment.id)
+            replyText = ""
+            replying = false
+        },
                 enabled = replyText.isNotBlank() && !isSubmitting,
                 modifier = Modifier.padding(start = 16.dp),
             ) {
