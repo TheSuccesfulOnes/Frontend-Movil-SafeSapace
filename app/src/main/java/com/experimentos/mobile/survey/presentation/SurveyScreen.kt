@@ -1,9 +1,7 @@
 package com.experimentos.mobile.survey.presentation
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -20,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Reply
-import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -35,7 +32,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -447,7 +443,6 @@ private fun SurveyCard(
 ) {
     val strings = LocalAppStrings.current
     var answerText by rememberSaveable(survey.id) { mutableStateOf("") }
-    var commentText by rememberSaveable(survey.id) { mutableStateOf("") }
     val hasAnswered = survey.answered || state.answeredSurveyIds.contains(survey.id)
 
     Card(
@@ -510,15 +505,6 @@ private fun SurveyCard(
                 }
                 if (state.expandedSurveyId == survey.id) {
                     HorizontalDivider()
-                    CommentComposer(
-                        value = commentText,
-                        onValueChange = { commentText = it.take(1000) },
-                        enabled = commentText.isNotBlank() && !state.isSubmitting,
-                        onSubmit = {
-                            onComment(survey.id, commentText, null)
-                            commentText = ""
-                        },
-                    )
                     state.comments[survey.id].orEmpty().forEach { comment ->
                         CommentItem(
                             surveyId = survey.id,
@@ -687,55 +673,6 @@ private fun CommentItem(
             },
         )
     }
-}
-
-@Composable
-private fun CommentComposer(
-    value: String,
-    onValueChange: (String) -> Unit,
-    enabled: Boolean,
-    onSubmit: () -> Unit,
-) {
-    val strings = LocalAppStrings.current
-    OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(strings.t("Comparte tu experiencia...")) },
-        supportingText = { Text("${value.length}/1000") },
-        minLines = 1,
-        maxLines = 4,
-        trailingIcon = {
-            IconButton(
-                onClick = onSubmit,
-                enabled = enabled,
-                modifier = Modifier.padding(end = 6.dp),
-            ) {
-                Surface(
-                    modifier = Modifier.size(34.dp),
-                    shape = CircleShape,
-                    color = if (enabled) {
-                        MaterialTheme.colorScheme.primary
-                    } else {
-                        MaterialTheme.colorScheme.surfaceVariant
-                    },
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.Send,
-                            contentDescription = strings.t("Enviar comentario"),
-                            tint = if (enabled) {
-                                MaterialTheme.colorScheme.onPrimary
-                            } else {
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                            },
-                            modifier = Modifier.size(17.dp),
-                        )
-                    }
-                }
-            }
-        },
-    )
 }
 
 @Composable

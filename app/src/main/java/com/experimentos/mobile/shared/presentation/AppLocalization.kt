@@ -204,7 +204,6 @@ class AppStrings(val language: AppLanguage) {
             "Comentarios anónimos" to "Anonymous comments",
             "Ocultar" to "Hide",
             "Ver comentarios" to "View comments",
-            "Comparte tu experiencia..." to "Share your experience...",
             "Enviar comentario" to "Send comment",
             "Eliminar comentario" to "Delete comment",
             "Esta acción no se puede deshacer." to "This action cannot be undone.",

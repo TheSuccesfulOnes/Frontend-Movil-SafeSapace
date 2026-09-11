@@ -16,7 +16,10 @@ data class CommentResponse(
     val replies: List<CommentResponse>,
 )
 
-data class CreateCommentRequest(val content: String, val parentId: Long?)
+data class CreateCommentRequest(
+    val content: String,
+    @SerializedName("parent_id") val parentId: Long?,
+)
 
 interface CommentApi {
     @GET("api/v1/surveys/{surveyId}/comments")
