@@ -149,50 +149,23 @@ fun CreateReportScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            Surface(
-                color = MaterialTheme.colorScheme.surface,
-                tonalElevation = 0.dp,
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                        .padding(horizontal = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    IconButton(
-                        onClick = onBack,
-                        enabled = !state.isSubmitting,
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = strings.t("Volver"),
-                        )
-                    }
-                    Text(strings.t("Reportes"), style = MaterialTheme.typography.titleMedium)
-                }
-            }
+            SafeSpaceTopBar(
+                title = "Reportes",
+                navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
+                navigationContentDescription = "Volver",
+                onNavigationClick = onBack,
+            )
         },
         containerColor = MaterialTheme.colorScheme.background,
     ) { innerPadding ->
-        Surface(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            shape = MaterialTheme.shapes.large,
-            color = MaterialTheme.colorScheme.surface,
-            tonalElevation = 1.dp,
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp, vertical = 18.dp),
+            verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
-            Column {
-                Column(
-                    modifier = Modifier
-                        .weight(1f, fill = false)
-                        .verticalScroll(rememberScrollState())
-                        .padding(horizontal = 20.dp, vertical = 18.dp),
-                    verticalArrangement = Arrangement.spacedBy(14.dp),
-                ) {
                     Text(
                         text = strings.t("Información del reporte"),
                         style = MaterialTheme.typography.titleMedium,
@@ -417,8 +390,6 @@ fun CreateReportScreen(
                             Text(strings.t("Enviar reporte"))
                         }
                     }
-                }
-            }
         }
     }
 }
