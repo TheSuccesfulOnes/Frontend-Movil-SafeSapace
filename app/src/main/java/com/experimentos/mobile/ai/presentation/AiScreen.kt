@@ -112,15 +112,8 @@ fun AiScreen(
                         .padding(horizontal = 16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.Chat,
-                        contentDescription = null,
-                        modifier = Modifier.size(22.dp),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
                     Text(
                         text = "Chat AI",
-                        modifier = Modifier.padding(start = 10.dp),
                         style = MaterialTheme.typography.titleMedium,
                     )
                     Spacer(modifier = Modifier.weight(1f))
