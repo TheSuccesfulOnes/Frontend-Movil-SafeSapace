@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.experimentos.mobile.activity.data.ActivityApi
 import com.experimentos.mobile.activity.data.ActivityResponse
 import com.experimentos.mobile.activity.data.CreateActivityRequest
+import com.experimentos.mobile.comment.data.CommentApi
+import com.experimentos.mobile.comment.data.CommentResponse
 import com.experimentos.mobile.mood.data.Mood
 import com.experimentos.mobile.mood.data.MoodApi
 import com.experimentos.mobile.mood.data.MoodSummary
@@ -53,6 +55,10 @@ data class HrContentUiState(
     val isLoading: Boolean = true,
     val surveys: List<SurveyResponse> = emptyList(),
     val activities: List<ActivityResponse> = emptyList(),
+    val comments: Map<Long, List<CommentResponse>> = emptyMap(),
+    val expandedSurveyId: Long? = null,
+    val commentsLoadingId: Long? = null,
+    val commentsErrorMessage: String? = null,
     val isSubmitting: Boolean = false,
     val message: String? = null,
     val errorMessage: String? = null,
@@ -61,6 +67,7 @@ data class HrContentUiState(
 class HrContentViewModel(
     private val surveyApi: SurveyApi,
     private val activityApi: ActivityApi,
+    private val commentApi: CommentApi,
 ) : ViewModel() {
     private val mutableState = MutableStateFlow(HrContentUiState())
     val state: StateFlow<HrContentUiState> = mutableState.asStateFlow()
@@ -75,7 +82,14 @@ class HrContentViewModel(
 
     fun load() {
         viewModelScope.launch {
-            mutableState.value = mutableState.value.copy(isLoading = true, errorMessage = null)
+            mutableState.value = mutableState.value.copy(
+                isLoading = true,
+                comments = emptyMap(),
+                expandedSurveyId = null,
+                commentsLoadingId = null,
+                commentsErrorMessage = null,
+                errorMessage = null,
+            )
             val surveys = runCatching { surveyApi.getManaged() }
             val activities = runCatching { activityApi.getManaged() }
             if (surveys.isSuccess && activities.isSuccess) {
@@ -90,6 +104,41 @@ class HrContentViewModel(
                     errorMessage = "No se pudo cargar el contenido administrable.",
                 )
             }
+        }
+    }
+
+    /** Loads anonymous survey comments only when the HR member opens a survey thread. */
+    fun toggleSurveyComments(surveyId: Long) {
+        if (mutableState.value.expandedSurveyId == surveyId) {
+            mutableState.value = mutableState.value.copy(expandedSurveyId = null)
+            return
+        }
+
+        mutableState.value = mutableState.value.copy(
+            expandedSurveyId = surveyId,
+            commentsErrorMessage = null,
+        )
+        if (mutableState.value.comments.containsKey(surveyId)) return
+
+        viewModelScope.launch {
+            mutableState.value = mutableState.value.copy(commentsLoadingId = surveyId)
+            runCatching { commentApi.getComments(surveyId) }
+                .onSuccess { comments ->
+                    val updatedComments = mutableState.value.comments.toMutableMap()
+                    updatedComments[surveyId] = comments
+                    mutableState.value = mutableState.value.copy(
+                        comments = updatedComments,
+                        commentsLoadingId = null,
+                    )
+                }
+                .onFailure { error ->
+                    mutableState.value = mutableState.value.copy(
+                        commentsLoadingId = null,
+                        commentsErrorMessage = error.toUserMessage(
+                            "No se pudieron cargar los comentarios.",
+                        ),
+                    )
+                }
         }
     }
 

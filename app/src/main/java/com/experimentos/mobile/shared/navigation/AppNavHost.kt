@@ -272,6 +272,7 @@ private fun HrNavigation(
             HrScreen.CONTENT -> HrContentScreen(
                 surveyApi = container.surveyApi,
                 activityApi = container.activityApi,
+                commentApi = container.commentApi,
                 sessionKey = session.username,
                 modifier = Modifier.padding(paddingValues),
             )

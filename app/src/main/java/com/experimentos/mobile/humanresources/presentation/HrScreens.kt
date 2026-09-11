@@ -22,7 +22,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.ChatBubbleOutline
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Poll
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -44,6 +50,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +58,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -58,6 +66,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.experimentos.mobile.activity.data.ActivityApi
 import com.experimentos.mobile.activity.data.ActivityResponse
+import com.experimentos.mobile.comment.data.CommentApi
+import com.experimentos.mobile.comment.data.CommentResponse
 import com.experimentos.mobile.mood.data.Mood
 import com.experimentos.mobile.mood.data.MoodApi
 import com.experimentos.mobile.mood.data.MoodSummary
@@ -82,6 +92,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.text.NumberFormat
 import java.util.Locale
+import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
 private val spanishLocale = Locale.forLanguageTag("es-ES")
@@ -433,32 +444,42 @@ private fun calculatePercentage(part: Long, total: Long): Int {
         .coerceIn(0, 100)
 }
 
+private enum class ManagementSection {
+    SURVEYS,
+    ACTIVITIES,
+}
+
 /** HR content management screen for the survey and activity endpoints. */
 @Composable
 fun HrContentScreen(
     surveyApi: SurveyApi,
     activityApi: ActivityApi,
+    commentApi: CommentApi,
     modifier: Modifier = Modifier,
     sessionKey: String = "default",
 ) {
     val strings = LocalAppStrings.current
     val viewModel: HrContentViewModel = viewModel(
         key = "hr-content-$sessionKey",
-        factory = HrContentViewModelFactory(surveyApi, activityApi),
+        factory = HrContentViewModelFactory(surveyApi, activityApi, commentApi),
     )
     val state by viewModel.state.collectAsStateWithLifecycle()
+    var selectedSection by rememberSaveable(sessionKey) {
+        mutableStateOf(ManagementSection.SURVEYS)
+    }
     var showSurveyDialog by remember { mutableStateOf(false) }
     var showActivityDialog by remember { mutableStateOf(false) }
     var surveyToClose by remember { mutableStateOf<SurveyResponse?>(null) }
     var activityToClose by remember { mutableStateOf<ActivityResponse?>(null) }
 
     LaunchedEffect(state.message) {
-        if (state.message != null) {
-            showSurveyDialog = false
-            showActivityDialog = false
-            surveyToClose = null
-            activityToClose = null
-        }
+        if (state.message == null) return@LaunchedEffect
+        showSurveyDialog = false
+        showActivityDialog = false
+        surveyToClose = null
+        activityToClose = null
+        delay(4_500)
+        viewModel.clearFeedback()
     }
 
     Scaffold(
@@ -494,14 +515,27 @@ fun HrContentScreen(
                 )
             }
             item {
-                ContentActions(
-                    onCreateSurvey = {
+                ManagementSectionSwitcher(
+                    selectedSection = selectedSection,
+                    surveyCount = state.surveys.size,
+                    activityCount = state.activities.size,
+                    onSelect = {
+                        selectedSection = it
                         viewModel.clearFeedback()
-                        showSurveyDialog = true
                     },
-                    onCreateActivity = {
+                )
+            }
+            item {
+                CreateContentButton(
+                    section = selectedSection,
+                    enabled = !state.isSubmitting,
+                    onClick = {
                         viewModel.clearFeedback()
-                        showActivityDialog = true
+                        if (selectedSection == ManagementSection.SURVEYS) {
+                            showSurveyDialog = true
+                        } else {
+                            showActivityDialog = true
+                        }
                     },
                 )
             }
@@ -513,11 +547,11 @@ fun HrContentScreen(
             }
             if (state.isLoading) {
                 item { LoadingState() }
-            } else {
+            } else if (selectedSection == ManagementSection.SURVEYS) {
                 item {
                     ContentSectionHeading(
                         title = "Encuestas",
-                        description = "Los borradores se pueden publicar y las publicadas se pueden cerrar.",
+                        description = "Revisa respuestas, comentarios y estado de cada encuesta.",
                     )
                 }
                 if (state.surveys.isEmpty()) {
@@ -526,16 +560,22 @@ fun HrContentScreen(
                     items(state.surveys, key = { "survey-${it.id}" }) { survey ->
                         SurveyManagementCard(
                             survey = survey,
+                            comments = state.comments[survey.id].orEmpty(),
+                            commentsErrorMessage = state.commentsErrorMessage,
+                            commentsLoading = state.commentsLoadingId == survey.id,
+                            isCommentsExpanded = state.expandedSurveyId == survey.id,
                             isSubmitting = state.isSubmitting,
                             onPublish = { viewModel.changeSurveyStatus(survey.id, publish = true) },
                             onClose = { surveyToClose = survey },
+                            onToggleComments = { viewModel.toggleSurveyComments(survey.id) },
                         )
                     }
                 }
+            } else {
                 item {
                     ContentSectionHeading(
                         title = "Actividades",
-                        description = "Consulta las votaciones abiertas y el historial de actividades cerradas.",
+                        description = "Consulta resultados actuales o finales y cierra las votaciones abiertas.",
                     )
                 }
                 if (state.activities.isEmpty()) {
@@ -596,31 +636,88 @@ fun HrContentScreen(
 }
 
 @Composable
-private fun ContentActions(
-    onCreateSurvey: () -> Unit,
-    onCreateActivity: () -> Unit,
+private fun ManagementSectionSwitcher(
+    selectedSection: ManagementSection,
+    surveyCount: Int,
+    activityCount: Int,
+    onSelect: (ManagementSection) -> Unit,
 ) {
     val strings = LocalAppStrings.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
     ) {
+        ManagementSectionButton(
+            selected = selectedSection == ManagementSection.SURVEYS,
+            label = "${strings.t("Encuestas")} ($surveyCount)",
+            icon = Icons.Default.Poll,
+            onClick = { onSelect(ManagementSection.SURVEYS) },
+            modifier = Modifier.weight(1f),
+        )
+        ManagementSectionButton(
+            selected = selectedSection == ManagementSection.ACTIVITIES,
+            label = "${strings.t("Actividades")} ($activityCount)",
+            icon = Icons.Default.CalendarMonth,
+            onClick = { onSelect(ManagementSection.ACTIVITIES) },
+            modifier = Modifier.weight(1f),
+        )
+    }
+}
+
+@Composable
+private fun ManagementSectionButton(
+    selected: Boolean,
+    label: String,
+    icon: ImageVector,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val buttonModifier = modifier.height(48.dp)
+    if (selected) {
         Button(
-            onClick = onCreateSurvey,
-            modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 12.dp),
+            onClick = onClick,
+            modifier = buttonModifier,
+            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
         ) {
-            Icon(Icons.Default.Add, contentDescription = null)
-            Text(strings.t("Encuesta"), modifier = Modifier.padding(start = 6.dp))
+            Icon(icon, contentDescription = null, modifier = Modifier.size(18.dp))
+            Text(label, modifier = Modifier.padding(start = 6.dp))
         }
+    } else {
         OutlinedButton(
-            onClick = onCreateActivity,
-            modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 12.dp),
+            onClick = onClick,
+            modifier = buttonModifier,
+            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
         ) {
-            Icon(Icons.Default.Add, contentDescription = null)
-            Text(strings.t("Actividad"), modifier = Modifier.padding(start = 6.dp))
+            Icon(icon, contentDescription = null, modifier = Modifier.size(18.dp))
+            Text(label, modifier = Modifier.padding(start = 6.dp))
         }
+    }
+}
+
+@Composable
+private fun CreateContentButton(
+    section: ManagementSection,
+    enabled: Boolean,
+    onClick: () -> Unit,
+) {
+    val strings = LocalAppStrings.current
+    Button(
+        onClick = onClick,
+        enabled = enabled,
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(horizontal = 18.dp, vertical = 12.dp),
+    ) {
+        Icon(Icons.Default.Add, contentDescription = null)
+        Text(
+            text = strings.t(
+                if (section == ManagementSection.SURVEYS) {
+                    "Nueva encuesta"
+                } else {
+                    "Nueva actividad"
+                },
+            ),
+            modifier = Modifier.padding(start = 8.dp),
+        )
     }
 }
 
@@ -648,63 +745,244 @@ private fun FeedbackMessage(message: String) {
         shape = MaterialTheme.shapes.small,
         color = MaterialTheme.colorScheme.primaryContainer,
     ) {
-        Text(
-            text = strings.translateMessage(message),
+        Row(
             modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            style = MaterialTheme.typography.bodyMedium,
-        )
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                imageVector = Icons.Default.CheckCircle,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.size(18.dp),
+            )
+            Text(
+                text = strings.translateMessage(message),
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
     }
 }
 
 @Composable
 private fun SurveyManagementCard(
     survey: SurveyResponse,
+    comments: List<CommentResponse>,
+    commentsErrorMessage: String?,
+    commentsLoading: Boolean,
+    isCommentsExpanded: Boolean,
     isSubmitting: Boolean,
     onPublish: () -> Unit,
     onClose: () -> Unit,
+    onToggleComments: () -> Unit,
 ) {
     val strings = LocalAppStrings.current
     ManagementCard(survey.title) {
-        Text(survey.question, style = MaterialTheme.typography.bodyLarge)
+        Text(
+            text = survey.question,
+            style = MaterialTheme.typography.bodyLarge,
+        )
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            StatusTag(if (survey.status == "PUBLISHED") "Publicada" else "Borrador")
-            StatusTag("${survey.answers} ${strings.t("respuestas")}")
+            StatusTag(
+                text = strings.t(
+                    if (survey.type == SurveyType.DAILY) "Diaria" else "Semanal",
+                ),
+            )
+            StatusTag(text = strings.surveyStatus(survey.status))
         }
         Text(
-            text = strings.t(if (survey.allowComments) "Comentarios habilitados" else "Solo respuestas"),
+            text = "${survey.answers} ${strings.t("respuestas")}",
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.bodySmall,
         )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                imageVector = Icons.Default.ChatBubbleOutline,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(18.dp),
+            )
+            Text(
+                text = strings.t(
+                    if (survey.allowComments) {
+                        "Comentarios habilitados"
+                    } else {
+                        "Solo respuestas"
+                    },
+                ),
+                modifier = Modifier.weight(1f),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        }
+        if (survey.allowComments) {
+            OutlinedButton(
+                onClick = onToggleComments,
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !commentsLoading,
+            ) {
+                Icon(
+                    imageVector = if (isCommentsExpanded) {
+                        Icons.Default.ExpandLess
+                    } else {
+                        Icons.Default.ExpandMore
+                    },
+                    contentDescription = null,
+                )
+                Text(
+                    text = if (isCommentsExpanded) {
+                        strings.t("Ocultar comentarios")
+                    } else {
+                        strings.t("Ver comentarios")
+                    },
+                    modifier = Modifier.padding(start = 6.dp),
+                )
+            }
+        }
+        if (isCommentsExpanded) {
+            ManagedSurveyComments(
+                comments = comments,
+                errorMessage = commentsErrorMessage,
+                isLoading = commentsLoading,
+            )
+        }
         when (survey.status) {
             "PUBLISHED" -> {
                 Button(
                     onClick = onClose,
                     enabled = !isSubmitting,
                     modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary,
-                    ),
                 ) {
                     Text(strings.t("Cerrar encuesta"))
                 }
             }
             "DRAFT" -> {
-                Button(onClick = onPublish, enabled = !isSubmitting) {
+                Button(
+                    onClick = onPublish,
+                    enabled = !isSubmitting,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
                     Text(strings.t("Publicar encuesta"))
                 }
             }
             else -> {
                 Text(
-                    strings.t("Esta encuesta está cerrada y se conserva solo como historial."),
+                    text = strings.t("Esta encuesta está cerrada y se conserva solo como historial."),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodySmall,
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun ManagedSurveyComments(
+    comments: List<CommentResponse>,
+    errorMessage: String?,
+    isLoading: Boolean,
+) {
+    val strings = LocalAppStrings.current
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        HorizontalDivider()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = strings.t("Comentarios"),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = "${comments.size} ${strings.t("comentarios")}",
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.labelMedium,
+            )
+        }
+        if (isLoading) {
+            LoadingState(modifier = Modifier.padding(vertical = 8.dp))
+        } else if (errorMessage != null) {
+            InlineError(errorMessage)
+        } else if (comments.isEmpty()) {
+            Text(
+                text = strings.t("Aún no hay comentarios."),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        } else {
+            comments.forEach { comment ->
+                ManagedComment(comment = comment)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ManagedComment(
+    comment: CommentResponse,
+    depth: Int = 0,
+) {
+    val strings = LocalAppStrings.current
+    val isReply = depth > 0
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = if (isReply) 14.dp else 0.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.small,
+            color = if (isReply) {
+                MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.58f)
+            } else {
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.52f)
+            },
+            border = BorderStroke(
+                1.dp,
+                if (isReply) {
+                    MaterialTheme.colorScheme.secondary.copy(alpha = 0.28f)
+                } else {
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.28f)
+                },
+            ),
+        ) {
+            Column(
+                modifier = Modifier.padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    text = if (isReply) {
+                        strings.t("Respuesta anónima")
+                    } else {
+                        strings.t("Comentario anónimo")
+                    },
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                Text(comment.content, style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = "♥ ${comment.likes}",
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.labelMedium,
+                )
+            }
+        }
+        comment.replies.forEach { reply ->
+            ManagedComment(comment = reply, depth = depth + 1)
         }
     }
 }
@@ -720,31 +998,132 @@ private fun ActivityManagementCard(
         activity.description?.takeIf(String::isNotBlank)?.let { description ->
             Text(description, style = MaterialTheme.typography.bodyLarge)
         }
-        StatusTag(
-            if (activity.status == "OPEN") {
-                "${activity.options.size} ${strings.t("opciones")} · ${strings.t("abierta")}"
-            } else {
-                "${activity.options.size} ${strings.t("opciones")} · ${strings.t("cerrada")}"
-            },
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            StatusTag(text = strings.activityStatus(activity.status))
+            StatusTag(text = "${activity.options.size} ${strings.t("opciones")}")
+        }
+        ActivityResults(activity)
         if (activity.status == "OPEN") {
             Button(
                 onClick = onClose,
                 enabled = !isSubmitting,
                 modifier = Modifier.fillMaxWidth(),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                ),
             ) {
                 Text(strings.t("Cerrar actividad"))
             }
         } else {
             Text(
-                strings.t("Esta actividad está cerrada y se conserva solo como historial."),
+                text = strings.t("Esta actividad está cerrada y se conserva solo como historial."),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.bodySmall,
             )
+        }
+    }
+}
+
+@Composable
+private fun ActivityResults(activity: ActivityResponse) {
+    val strings = LocalAppStrings.current
+    val totalVotes = activity.options.sumOf { it.votes }
+    val highestVoteCount = activity.options.maxOfOrNull { it.votes } ?: 0L
+    val hasVotes = totalVotes > 0L
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        HorizontalDivider()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                Text(
+                    text = strings.t(
+                        if (activity.status == "CLOSED") {
+                            "Resultados finales"
+                        } else {
+                            "Resultados actuales"
+                        },
+                    ),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = "$totalVotes ${strings.t("votos")}",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.labelMedium,
+                )
+            }
+            if (activity.status == "CLOSED" && hasVotes) {
+                StatusTag(text = strings.t("Resultado final"))
+            }
+        }
+        if (!hasVotes) {
+            Text(
+                text = strings.t("Aún no hay votos."),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.bodySmall,
+            )
+        } else {
+            activity.options.forEach { option ->
+                val percentage = if (totalVotes == 0L) {
+                    0
+                } else {
+                    (option.votes.toDouble() / totalVotes * 100).roundToInt().coerceIn(0, 100)
+                }
+                val isWinner = option.votes == highestVoteCount
+                Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = option.label,
+                            modifier = Modifier.weight(1f),
+                            fontWeight = if (isWinner) FontWeight.SemiBold else FontWeight.Normal,
+                        )
+                        Text(
+                            text = "$percentage%",
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.SemiBold,
+                        )
+                    }
+                    LinearProgressIndicator(
+                        progress = { percentage / 100f },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(8.dp),
+                        color = if (isWinner) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.secondary
+                        },
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                    Text(
+                            text = "${option.votes} ${strings.t("votos")}",
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                        if (isWinner) {
+                            Text(
+                                text = strings.t("Más votada"),
+                                color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.labelSmall,
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -754,7 +1133,6 @@ private fun ManagementCard(
     title: String,
     content: @Composable () -> Unit,
 ) {
-    val strings = LocalAppStrings.current
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.medium,

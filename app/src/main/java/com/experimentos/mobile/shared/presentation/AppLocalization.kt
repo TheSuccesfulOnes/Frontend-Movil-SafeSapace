@@ -217,6 +217,7 @@ class AppStrings(val language: AppLanguage) {
             "Escribe una respuesta..." to "Write a reply...",
             "Publicar respuesta" to "Post reply",
             "VOTACIÓN ABIERTA" to "OPEN VOTE",
+            "CERRADA" to "CLOSED",
             "Actividad abierta" to "Open activity",
             "abierta" to "open",
             "cerrada" to "closed",
@@ -231,6 +232,10 @@ class AppStrings(val language: AppLanguage) {
             "Actualizar inicio" to "Refresh home",
             "Actualizar contenido" to "Refresh content",
             "Actualizar resumen" to "Refresh summary",
+            "Revisa respuestas, comentarios y estado de cada encuesta." to
+                "Review responses, comments and the status of each survey.",
+            "Consulta resultados actuales o finales y cierra las votaciones abiertas." to
+                "Review current or final results and close open votes.",
             "Los borradores se pueden publicar y las publicadas se pueden cerrar." to
                 "Drafts can be published and published surveys can be closed.",
             "Actividades" to "Activities",
@@ -240,6 +245,11 @@ class AppStrings(val language: AppLanguage) {
             "Las personas ya no podrán enviar nuevas respuestas a esta encuesta." to
                 "People will no longer be able to submit new answers to this survey.",
             "Cerrar actividad" to "Close activity",
+            "Ocultar comentarios" to "Hide comments",
+            "Comentarios" to "Comments",
+            "comentarios" to "comments",
+            "Aún no hay comentarios." to "There are no comments yet.",
+            "Comentario anónimo" to "Anonymous comment",
             "La actividad dejará de estar disponible para votación." to
                 "The activity will no longer be available for voting.",
             "Encuesta" to "Survey",
@@ -271,6 +281,11 @@ class AppStrings(val language: AppLanguage) {
             "Crear actividad" to "Create activity",
             "Confirmar" to "Confirm",
             "Mantener abierta" to "Keep open",
+            "Resultados finales" to "Final results",
+            "Resultados actuales" to "Current results",
+            "Resultado final" to "Final result",
+            "Aún no hay votos." to "There are no votes yet.",
+            "Más votada" to "Most voted",
             "opciones" to "options",
             "mínimo 2" to "minimum 2",
             "Publicada" to "Published",
