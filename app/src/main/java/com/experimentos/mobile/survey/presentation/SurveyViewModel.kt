@@ -93,6 +93,8 @@ class SurveyViewModel(
                     )
                     // Refresh the aggregate answer count shown on the card.
                     refreshSurveys()
+                    // The survey answer is also published as an anonymous root comment.
+                    refreshComments(surveyId)
                 }
                 .onFailure { error ->
                     mutableState.value = mutableState.value.copy(
