@@ -15,9 +15,12 @@ Native Android client for the Employee Wellbeing platform.
 
 1. Open this directory in Android Studio.
 2. Confirm that Android SDK 36 and Java 21 are available.
-3. Start the backend with the local Spring profile.
-4. Use an Android emulator. The default debug API URL is `http://10.0.2.2:8080/`.
-5. For a physical device, replace `API_BASE_URL` in `app/build.gradle.kts` with the host machine's LAN address.
+3. The default build connects to the deployed Render backend at
+   `https://safespace-backend-q3uv.onrender.com/`.
+4. Use an Android emulator. To point the debug build at a local backend, pass
+   `-PapiBaseUrl=http://10.0.2.2:8080/` to Gradle.
+5. For a physical device, pass the host machine's LAN address through
+   `-PapiBaseUrl=http://<host-lan-ip>:8080/`.
 
 Cleartext HTTP is enabled only for the debug build so local development can reach the backend. Release builds reject cleartext traffic and must use HTTPS.
 
@@ -61,4 +64,4 @@ Run the following commands before distributing a build:
 .\gradlew.bat app:lintDebug app:testDebugUnitTest app:connectedAndroidTest
 ```
 
-The current local audit expects the Spring Boot backend at `http://localhost:8080` and a running Android emulator for instrumented tests.
+The current audit expects a reachable backend URL and a running Android emulator for instrumented tests.

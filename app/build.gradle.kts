@@ -7,6 +7,10 @@ android {
     namespace = "com.experimentos.mobile"
     compileSdk = 36
 
+    val apiBaseUrl = providers.gradleProperty("apiBaseUrl")
+        .orElse("https://safespace-backend-q3uv.onrender.com/")
+        .get()
+
     defaultConfig {
         applicationId = "com.experimentos.mobile"
         minSdk = 26
@@ -14,7 +18,7 @@ android {
         versionCode = 1
         versionName = "0.1.0"
 
-        buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8080/\"")
+        buildConfigField("String", "API_BASE_URL", "\"$apiBaseUrl\"")
     }
 
     buildTypes {
