@@ -35,7 +35,7 @@ The `SYSTEM_ADMIN` role is intentionally excluded from mobile navigation. System
 
 The mobile client currently includes:
 
-- Registration with username, email, password, and confirmation.
+- Registration with display name, username, email, password, and confirmation.
 - Username/password login with encrypted session persistence.
 - Employee password recovery with a generic request response, expiring single-use token, and new password confirmation.
 - Automatic logout when a protected request returns HTTP 401.

@@ -131,6 +131,7 @@ fun RegisterScreen(
         factory = AuthViewModelFactory(DefaultAuthRepository(api), sessionStore),
     )
     val state by viewModel.state.collectAsStateWithLifecycle()
+    var displayName by rememberSaveable { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
     // Passwords are intentionally not placed in saved instance state.
@@ -147,6 +148,21 @@ fun RegisterScreen(
         title = strings.t("Crea tu cuenta"),
         subtitle = strings.t("SafeSpace · Tu santuario digital."),
     ) {
+        AuthTextField(
+            value = displayName,
+            onValueChange = { displayName = it },
+            label = strings.t("Nombre visible"),
+            placeholder = strings.t("ej. Carlos Mendoza"),
+            icon = Icons.Default.Person,
+            imeAction = ImeAction.Next,
+        )
+        Text(
+            strings.t("Así te llamará la app en tus espacios personales."),
+            modifier = Modifier.padding(top = 6.dp),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(Modifier.height(14.dp))
         AuthTextField(
             value = username,
             onValueChange = { username = it },
@@ -193,7 +209,7 @@ fun RegisterScreen(
         )
         Spacer(Modifier.height(22.dp))
         Button(
-            onClick = { viewModel.register(username, email, password, confirmation) },
+            onClick = { viewModel.register(displayName, username, email, password, confirmation) },
             modifier = Modifier.fillMaxWidth().height(52.dp),
             enabled = !state.isLoading,
             shape = MaterialTheme.shapes.small,

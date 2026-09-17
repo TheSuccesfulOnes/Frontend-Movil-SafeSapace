@@ -70,6 +70,8 @@ class AppStrings(val language: AppLanguage) {
         message == "Preferencias actualizadas." -> "Preferences updated."
         message == "Datos de cuenta actualizados." -> "Account details updated."
         message == "Completa todos los campos." -> "Complete all fields."
+        message == "El nombre visible debe tener entre 2 y 100 caracteres." ->
+            "The display name must be between 2 and 100 characters."
         message == "Las contraseñas no coinciden." -> "Passwords do not match."
         message == "La contraseña debe tener al menos 8 caracteres." -> "The password must contain at least 8 characters."
         message == "El enlace de recuperación no es válido o ya expiró. Solicita uno nuevo." ->
@@ -141,6 +143,8 @@ class AppStrings(val language: AppLanguage) {
             "Regístrate" to "Sign up",
             "Crea tu cuenta" to "Create your account",
             "SafeSpace · Tu santuario digital." to "SafeSpace · Your digital sanctuary.",
+            "Así te llamará la app en tus espacios personales." to
+                "This is how the app will address you in your personal spaces.",
             "Nombre de usuario" to "Username",
             "ej. carlos.mendoza" to "e.g. carlos.mendoza",
             "Correo electrónico" to "Email address",

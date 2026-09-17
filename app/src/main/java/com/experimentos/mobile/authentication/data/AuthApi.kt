@@ -10,6 +10,8 @@ data class RegisterRequest(
     val password: String,
     @SerializedName("confirm_password")
     val confirmPassword: String,
+    @SerializedName("display_name")
+    val displayName: String,
 )
 
 data class LoginRequest(val identifier: String, val password: String)

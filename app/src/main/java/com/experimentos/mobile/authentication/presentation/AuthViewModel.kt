@@ -40,10 +40,22 @@ class AuthViewModel(
         }
     }
 
-    fun register(username: String, email: String, password: String, confirmation: String) {
+    fun register(
+        displayName: String,
+        username: String,
+        email: String,
+        password: String,
+        confirmation: String,
+    ) {
         when {
-            username.isBlank() || email.isBlank() || password.isBlank() || confirmation.isBlank() -> {
+            displayName.isBlank() || username.isBlank() || email.isBlank() ||
+                password.isBlank() || confirmation.isBlank() -> {
                 mutableState.value = AuthUiState(errorMessage = "Completa todos los campos.")
+            }
+            displayName.trim().length !in 2..100 -> {
+                mutableState.value = AuthUiState(
+                    errorMessage = "El nombre visible debe tener entre 2 y 100 caracteres.",
+                )
             }
             password != confirmation -> {
                 mutableState.value = AuthUiState(errorMessage = "Las contraseñas no coinciden.")
@@ -53,7 +65,15 @@ class AuthViewModel(
             }
             else -> viewModelScope.launch {
                 mutableState.value = AuthUiState(isLoading = true)
-                repository.register(RegisterRequest(username.trim(), email.trim(), password, confirmation))
+                repository.register(
+                    RegisterRequest(
+                        username = username.trim(),
+                        email = email.trim(),
+                        password = password,
+                        confirmPassword = confirmation,
+                        displayName = displayName.trim(),
+                    ),
+                )
                     .onSuccess { mutableState.value = AuthUiState(registrationCompleted = true) }
                     .onFailure { error -> mutableState.value = AuthUiState(errorMessage = error.toAuthUserMessage()) }
             }
