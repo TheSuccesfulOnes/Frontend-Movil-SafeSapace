@@ -108,6 +108,7 @@ class AppStrings(val language: AppLanguage) {
         val englishTranslations = mapOf(
             "SafeSpace" to "SafeSpace",
             "Logo de SafeSpace" to "SafeSpace logo",
+            "Bienestar laboral, en un espacio seguro." to "Workplace wellbeing, in a safe space.",
             "Bienvenido de nuevo" to "Welcome back",
             "Vuelve a tu espacio seguro para cuidar de ti." to "Return to your safe space and take care of yourself.",
             "Usuario o correo" to "Username or email",
