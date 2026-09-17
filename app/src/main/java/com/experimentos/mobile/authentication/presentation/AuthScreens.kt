@@ -16,7 +16,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -25,11 +24,9 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -63,7 +60,6 @@ fun LoginScreen(
     api: AuthApi,
     sessionStore: SessionStore,
     onRegister: () -> Unit,
-    onPasswordRecovery: () -> Unit,
 ) {
     val strings = LocalAppStrings.current
     val viewModel: AuthViewModel = viewModel(
@@ -101,14 +97,6 @@ fun LoginScreen(
             passwordVisible = showPassword,
             onPasswordVisibilityChange = { showPassword = !showPassword },
         )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-        ) {
-            TextButton(onClick = onPasswordRecovery) {
-                Text(strings.t("¿Olvidaste tu contraseña?"))
-            }
-        }
         Spacer(Modifier.height(12.dp))
         Button(
             onClick = { viewModel.login(identifier, password) },
@@ -130,197 +118,6 @@ fun LoginScreen(
         }
     }
 
-}
-
-@Composable
-fun PasswordRecoveryScreen(
-    api: AuthApi,
-    onBackToLogin: () -> Unit,
-) {
-    val strings = LocalAppStrings.current
-    val viewModel: PasswordRecoveryViewModel = viewModel(
-        factory = PasswordRecoveryViewModelFactory.forApi(api),
-    )
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    var identifier by rememberSaveable { mutableStateOf("") }
-    var token by rememberSaveable { mutableStateOf("") }
-    var newPassword by remember { mutableStateOf("") }
-    var confirmation by remember { mutableStateOf("") }
-    var showNewPassword by rememberSaveable { mutableStateOf(false) }
-    var showConfirmation by rememberSaveable { mutableStateOf(false) }
-    var showResetForm by rememberSaveable { mutableStateOf(false) }
-
-    LaunchedEffect(state.completed) {
-        if (state.completed) {
-            showResetForm = false
-            newPassword = ""
-            confirmation = ""
-        }
-    }
-
-    AuthLayout(
-        title = strings.t("Recuperar acceso"),
-        subtitle = strings.t("Te ayudaremos a volver a tu espacio seguro."),
-    ) {
-        if (state.completed) {
-            RecoverySuccessCard(onBackToLogin = onBackToLogin)
-        } else if (!showResetForm) {
-            Text(
-                strings.t("Escribe tu usuario o correo y te enviaremos un enlace de recuperación."),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(18.dp))
-            AuthTextField(
-                value = identifier,
-                onValueChange = { identifier = it },
-                label = strings.t("Usuario o correo"),
-                placeholder = strings.t("ej. carlos o carlos@empresa.com"),
-                icon = Icons.Default.Person,
-                imeAction = ImeAction.Done,
-            )
-            Spacer(Modifier.height(18.dp))
-            Button(
-                onClick = { viewModel.requestRecovery(identifier) },
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                enabled = !state.isLoading,
-                shape = MaterialTheme.shapes.small,
-            ) {
-                if (state.isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(18.dp),
-                        strokeWidth = 2.dp,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                    )
-                    Spacer(Modifier.size(8.dp))
-                }
-                Text(strings.t(if (state.isLoading) "Enviando…" else "Enviar enlace"))
-            }
-            if (state.requestSent) {
-                Spacer(Modifier.height(14.dp))
-                InlineSuccess(
-                    strings.t("Si la cuenta existe, recibirás instrucciones para recuperar el acceso."),
-                )
-                Spacer(Modifier.height(10.dp))
-                OutlinedButton(
-                    onClick = { showResetForm = true },
-                    modifier = Modifier.fillMaxWidth().height(48.dp),
-                    shape = MaterialTheme.shapes.small,
-                ) {
-                    Text(strings.t("Ya tengo el enlace"))
-                }
-            }
-        } else {
-            Text(
-                strings.t("Pega el token que recibiste para crear una nueva contraseña."),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(18.dp))
-            AuthTextField(
-                value = token,
-                onValueChange = { token = it },
-                label = strings.t("Token de recuperación"),
-                placeholder = strings.t("Pega aquí tu token"),
-                icon = Icons.Default.Lock,
-                imeAction = ImeAction.Next,
-            )
-            Spacer(Modifier.height(14.dp))
-            AuthTextField(
-                value = newPassword,
-                onValueChange = { newPassword = it },
-                label = strings.t("Nueva contraseña"),
-                placeholder = strings.t("Mínimo 8 caracteres"),
-                icon = Icons.Default.Lock,
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Next,
-                isPassword = true,
-                passwordVisible = showNewPassword,
-                onPasswordVisibilityChange = { showNewPassword = !showNewPassword },
-            )
-            Spacer(Modifier.height(14.dp))
-            AuthTextField(
-                value = confirmation,
-                onValueChange = { confirmation = it },
-                label = strings.t("Confirmar contraseña"),
-                placeholder = strings.t("Repite tu contraseña"),
-                icon = Icons.Default.Lock,
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done,
-                isPassword = true,
-                passwordVisible = showConfirmation,
-                onPasswordVisibilityChange = { showConfirmation = !showConfirmation },
-            )
-            Spacer(Modifier.height(18.dp))
-            Button(
-                onClick = { viewModel.confirmRecovery(token, newPassword, confirmation) },
-                modifier = Modifier.fillMaxWidth().height(52.dp),
-                enabled = !state.isLoading,
-                shape = MaterialTheme.shapes.small,
-            ) {
-                Text(strings.t(if (state.isLoading) "Guardando…" else "Cambiar contraseña"))
-            }
-        }
-        state.errorMessage?.let { InlineError(it) }
-        Spacer(Modifier.height(12.dp))
-        OutlinedButton(
-            onClick = onBackToLogin,
-            modifier = Modifier.fillMaxWidth().height(48.dp),
-            enabled = !state.isLoading,
-            shape = MaterialTheme.shapes.small,
-        ) {
-            Text(strings.t("Volver al inicio de sesión"))
-        }
-    }
-}
-
-@Composable
-private fun InlineSuccess(message: String) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-            Text(message, color = MaterialTheme.colorScheme.onPrimaryContainer)
-        }
-    }
-}
-
-@Composable
-private fun RecoverySuccessCard(onBackToLogin: () -> Unit) {
-    val strings = LocalAppStrings.current
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
-    ) {
-        Column(
-            modifier = Modifier.padding(18.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-            Text(
-                strings.t("Contraseña actualizada"),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-            )
-            Text(
-                strings.t("Tu contraseña fue actualizada. Ya puedes iniciar sesión."),
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-            )
-            Button(
-                onClick = onBackToLogin,
-                modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.small,
-            ) {
-                Text(strings.t("Volver al inicio de sesión"))
-            }
-        }
-    }
 }
 
 @Composable

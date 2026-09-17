@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import com.experimentos.mobile.authentication.presentation.LoginScreen
 import com.experimentos.mobile.authentication.presentation.RegisterScreen
-import com.experimentos.mobile.authentication.presentation.PasswordRecoveryScreen
 import com.experimentos.mobile.ai.presentation.AiScreen
 import com.experimentos.mobile.humanresources.presentation.HrContentScreen
 import com.experimentos.mobile.humanresources.presentation.HrHomeScreen
@@ -66,7 +65,6 @@ fun AppNavHost(
     val coroutineScope = rememberCoroutineScope()
     val sessionStore = container.sessionStore
     var showRegister by remember { mutableStateOf(false) }
-    var showPasswordRecovery by remember { mutableStateOf(false) }
 
     if (session == null) {
         if (showRegister) {
@@ -75,17 +73,11 @@ fun AppNavHost(
                 sessionStore = sessionStore,
                 onBackToLogin = { showRegister = false },
             )
-        } else if (showPasswordRecovery) {
-            PasswordRecoveryScreen(
-                api = container.authApi,
-                onBackToLogin = { showPasswordRecovery = false },
-            )
         } else {
             LoginScreen(
                 api = container.authApi,
                 sessionStore = sessionStore,
                 onRegister = { showRegister = true },
-                onPasswordRecovery = { showPasswordRecovery = true },
             )
         }
         return
