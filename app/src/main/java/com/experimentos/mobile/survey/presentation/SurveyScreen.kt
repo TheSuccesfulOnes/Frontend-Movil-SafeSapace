@@ -71,14 +71,14 @@ import com.experimentos.mobile.survey.data.SurveyResponse
 import com.experimentos.mobile.survey.data.SurveyType
 
 private const val HUB_DESTINATION = "hub"
-private const val DAILY_DESTINATION = "daily"
+private const val SURVEYS_DESTINATION = "surveys"
 private const val WEEKLY_DESTINATION = "weekly"
 
 /**
  * Survey area entry point for employees.
  *
- * The hub keeps the two workflows discoverable while the detail destinations
- * prevent long mixed lists and make the back action predictable.
+ * The hub keeps survey and activity workflows discoverable while each detail
+ * destination keeps its content focused and makes the back action predictable.
  */
 @Composable
 fun SurveysScreen(
@@ -122,8 +122,8 @@ fun SurveysScreen(
                 )
             } else {
                 SafeSpaceTopBar(
-                    title = if (destination == DAILY_DESTINATION) {
-                        strings.t("Encuesta Diaria")
+                    title = if (destination == SURVEYS_DESTINATION) {
+                        strings.t("Encuestas")
                     } else {
                         strings.t("Actividad Semanal")
                     },
@@ -143,7 +143,7 @@ fun SurveysScreen(
         containerColor = MaterialTheme.colorScheme.background,
     ) { innerPadding ->
         when (destination) {
-            DAILY_DESTINATION -> DailySurveysContent(
+            SURVEYS_DESTINATION -> SurveysContent(
                 state = surveyState,
                 onAnswer = surveyViewModel::answer,
                 onToggleComments = surveyViewModel::toggleComments,
@@ -164,7 +164,7 @@ fun SurveysScreen(
             else -> SurveyHubContent(
                 surveyState = surveyState,
                 activityState = activityState,
-                onOpenDaily = { destination = DAILY_DESTINATION },
+                onOpenSurveys = { destination = SURVEYS_DESTINATION },
                 onOpenWeekly = { destination = WEEKLY_DESTINATION },
                 onOpenReport = onOpenReport,
                 contentPadding = innerPadding,
@@ -177,17 +177,16 @@ fun SurveysScreen(
 private fun SurveyHubContent(
     surveyState: SurveyUiState,
     activityState: com.experimentos.mobile.activity.presentation.ActivityUiState,
-    onOpenDaily: () -> Unit,
+    onOpenSurveys: () -> Unit,
     onOpenWeekly: () -> Unit,
     onOpenReport: () -> Unit,
     contentPadding: PaddingValues,
 ) {
     val strings = LocalAppStrings.current
-    val dailySurveys = surveyState.surveys.filter { it.type == SurveyType.DAILY }
-    val dailyStatus = when {
+    val surveysStatus = when {
         surveyState.isLoading -> "Cargando"
-        dailySurveys.isEmpty() -> "Sin encuestas"
-        dailySurveys.all { it.answered || surveyState.answeredSurveyIds.contains(it.id) } -> "Respondidas"
+        surveyState.surveys.isEmpty() -> "Sin encuestas"
+        surveyState.surveys.all { it.answered || surveyState.answeredSurveyIds.contains(it.id) } -> "Respondidas"
         else -> "Pendiente"
     }
     val weeklyStatus = when {
@@ -222,10 +221,10 @@ private fun SurveyHubContent(
             SurveyCategoryCard(
                 icon = Icons.Default.Poll,
                 iconColor = MaterialTheme.colorScheme.primaryContainer,
-                status = dailyStatus,
-                title = "Encuestas diarias",
-                description = "Breve chequeo de tu estado de ánimo y niveles de energía hoy. Toma menos de un minuto.",
-                onOpen = onOpenDaily,
+                status = surveysStatus,
+                title = "Encuestas",
+                description = "Responde encuestas diarias y semanales y comparte tu experiencia.",
+                onOpen = onOpenSurveys,
             )
         }
         item {
@@ -306,7 +305,7 @@ private fun SurveyCategoryCard(
 }
 
 @Composable
-private fun DailySurveysContent(
+private fun SurveysContent(
     state: SurveyUiState,
     onAnswer: (Long, String) -> Unit,
     onToggleComments: (Long) -> Unit,
@@ -317,6 +316,7 @@ private fun DailySurveysContent(
 ) {
     val strings = LocalAppStrings.current
     val dailySurveys = state.surveys.filter { it.type == SurveyType.DAILY }
+    val weeklySurveys = state.surveys.filter { it.type == SurveyType.WEEKLY }
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -326,7 +326,7 @@ private fun DailySurveysContent(
     ) {
         item {
             Text(
-                strings.t("Responde las preguntas de hoy y comparte cómo fue tu jornada."),
+                strings.t("Responde las encuestas disponibles y comparte tu experiencia."),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
@@ -338,22 +338,64 @@ private fun DailySurveysContent(
         }
         if (state.isLoading) {
             item { LoadingState() }
-        } else if (dailySurveys.isEmpty()) {
-            item { EmptyState("Todavía no hay encuestas publicadas.") }
         } else {
-            items(dailySurveys, key = { it.id }) { survey ->
-                SurveyCard(
-                    survey = survey,
-                    state = state,
-                    onAnswer = onAnswer,
-                    onToggleComments = onToggleComments,
-                    onComment = onComment,
-                    onLike = onLike,
-                    onDelete = onDelete,
-                )
+            item { SurveyGroupHeader("Diarias") }
+            if (dailySurveys.isEmpty()) {
+                item { SurveyGroupEmptyMessage("No hay encuestas diarias publicadas.") }
+            } else {
+                items(dailySurveys, key = { "daily-${it.id}" }) { survey ->
+                    SurveyCard(
+                        survey = survey,
+                        state = state,
+                        onAnswer = onAnswer,
+                        onToggleComments = onToggleComments,
+                        onComment = onComment,
+                        onLike = onLike,
+                        onDelete = onDelete,
+                    )
+                }
+            }
+            item { SurveyGroupHeader("Semanales") }
+            if (weeklySurveys.isEmpty()) {
+                item { SurveyGroupEmptyMessage("No hay encuestas semanales publicadas.") }
+            } else {
+                items(weeklySurveys, key = { "weekly-${it.id}" }) { survey ->
+                    SurveyCard(
+                        survey = survey,
+                        state = state,
+                        onAnswer = onAnswer,
+                        onToggleComments = onToggleComments,
+                        onComment = onComment,
+                        onLike = onLike,
+                        onDelete = onDelete,
+                    )
+                }
             }
         }
     }
+}
+
+@Composable
+private fun SurveyGroupHeader(title: String) {
+    val strings = LocalAppStrings.current
+    Text(
+        text = strings.t(title),
+        style = MaterialTheme.typography.titleMedium,
+        fontWeight = FontWeight.SemiBold,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.padding(top = 4.dp),
+    )
+}
+
+@Composable
+private fun SurveyGroupEmptyMessage(message: String) {
+    val strings = LocalAppStrings.current
+    Text(
+        text = strings.t(message),
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(horizontal = 4.dp),
+    )
 }
 
 @Composable

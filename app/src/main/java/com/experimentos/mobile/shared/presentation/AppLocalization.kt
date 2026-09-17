@@ -183,6 +183,13 @@ class AppStrings(val language: AppLanguage) {
             "Tu opinión nos ayuda a construir un entorno laboral saludable. Participa en nuestras evaluaciones periódicas y ayúdanos a mejorar el bienestar del equipo." to
                 "Your opinion helps us build a healthy workplace. Take part in our regular evaluations and help us improve team wellbeing.",
             "Encuestas diarias" to "Daily surveys",
+            "Encuestas semanales" to "Weekly surveys",
+            "Diarias" to "Daily",
+            "Semanales" to "Weekly",
+            "No hay encuestas diarias publicadas." to "No daily surveys are published.",
+            "No hay encuestas semanales publicadas." to "No weekly surveys are published.",
+            "Responde encuestas diarias y semanales y comparte tu experiencia." to
+                "Answer daily and weekly surveys and share your experience.",
             "Breve chequeo de tu estado de ánimo y niveles de energía hoy. Toma menos de un minuto." to
                 "A quick check-in on your mood and energy levels today. It takes less than a minute.",
             "Actividades semanales" to "Weekly activities",
@@ -197,6 +204,8 @@ class AppStrings(val language: AppLanguage) {
             "Ver actividades" to "View activities",
             "Responde las preguntas de hoy y comparte cómo fue tu jornada." to
                 "Answer today's questions and share how your workday went.",
+            "Responde las encuestas disponibles y comparte tu experiencia." to
+                "Answer the available surveys and share your experience.",
             "Comenzar ahora  →" to "Start now  →",
             "Ver progreso  →" to "View progress  →",
             "Actividad del fin de semana" to "Weekend activity",
