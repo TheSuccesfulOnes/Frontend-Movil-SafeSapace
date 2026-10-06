@@ -55,6 +55,8 @@ import com.experimentos.mobile.shared.presentation.SafeSpaceTopBar
 import com.experimentos.mobile.shared.presentation.SafeSpaceTopBarAction
 import com.experimentos.mobile.shared.presentation.WelcomeRow
 
+internal fun canRecordMood(selectedMood: Mood?, submitting: Boolean): Boolean = selectedMood == null && !submitting
+
 @Composable
 fun HomeScreen(
     username: String,
@@ -156,7 +158,7 @@ private fun MoodCard(state: HomeUiState, onMoodSelected: (Mood) -> Unit) {
                     MoodOption(
                         option = option,
                         selected = state.selectedMood == option.mood,
-                        enabled = state.selectedMood == null && !state.isSubmitting,
+                        enabled = canRecordMood(state.selectedMood, state.isSubmitting),
                         onClick = { onMoodSelected(option.mood) },
                     )
                 }

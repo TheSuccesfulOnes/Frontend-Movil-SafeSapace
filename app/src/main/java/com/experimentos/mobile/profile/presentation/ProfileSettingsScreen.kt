@@ -57,6 +57,15 @@ enum class ProfileField {
     EMAIL,
 }
 
+internal fun isProfileFieldValid(field: ProfileField, value: String): Boolean = when (field) {
+    ProfileField.USERNAME -> value.trim().length in 3..50 && value.trim().matches(Regex("[A-Za-z0-9._-]+"))
+    ProfileField.EMAIL -> android.util.Patterns.EMAIL_ADDRESS.matcher(value.trim()).matches()
+    ProfileField.DISPLAY_NAME -> value.trim().length in 2..100
+}
+
+internal fun canSaveProfileField(field: ProfileField, value: String, isSaving: Boolean): Boolean =
+    isProfileFieldValid(field, value) && !isSaving
+
 @Composable
 fun ProfileSettingsScreen(
     profile: ProfileResponse?,
@@ -359,11 +368,7 @@ fun AccountEditDialog(
     }
     val isUsername = field == ProfileField.USERNAME
     val isEmail = field == ProfileField.EMAIL
-    val isValid = when {
-        isUsername -> value.trim().length in 3..50 && value.trim().matches(Regex("[A-Za-z0-9._-]+"))
-        isEmail -> android.util.Patterns.EMAIL_ADDRESS.matcher(value.trim()).matches()
-        else -> value.trim().length in 2..100
-    }
+    val isValid = isProfileFieldValid(field, value)
     val titleKey = when (field) {
         ProfileField.DISPLAY_NAME -> "Cambiar nombre"
         ProfileField.USERNAME -> "Cambiar nombre de usuario"
@@ -425,7 +430,7 @@ fun AccountEditDialog(
                         if (field == ProfileField.DISPLAY_NAME) value else profile?.displayName.orEmpty(),
                     )
                 },
-                enabled = isValid && !isSaving,
+                enabled = canSaveProfileField(field, value, isSaving),
             ) {
                 Text(strings.t("Guardar"))
             }

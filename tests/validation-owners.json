@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "minimum_cases_per_owner": 20,
+  "owners": [
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/AuthViewModel.kt",
+      "scope": "Required inputs, display-name range, matching passwords, registration policy and busy registration; repository/session lifecycle.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.AuthViewModelValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/PasswordRecoveryViewModel.kt",
+      "scope": "Recovery identifier/token/password guards, minimum length and request/reset lifecycle.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.RecoveryValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/domain/RegistrationPasswordPolicy.kt",
+      "scope": "Unicode categories/code points, required character classes and UTF-8 bcrypt limit.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.PasswordBoundaryTest",
+          "default_type": "unit"
+        },
+        {
+          "name": "com.experimentos.mobile.authentication.domain.RegistrationPasswordPolicyTest",
+          "default_type": "unit"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/domain/AuthRepository.kt",
+      "scope": "Response token guard, normalization and real Retrofit/Gson request-response contracts against loopback.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.AuthRepositoryContractTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/AuthErrorMapper.kt",
+      "scope": "Safe translation of known validation errors; credentials/server details hidden.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.AuthErrorValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/presentation/ProfileSettingsScreen.kt",
+      "scope": "Username and display-name limits, Android email pattern and saving gate; JVM Robolectric, no Compose interaction.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.ProfileFormValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/presentation/ProfileViewModel.kt",
+      "scope": "Account input normalization and preference/session synchronization; server retains final validation authority.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.ProfileViewModelValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/data/ProfilePhotoStore.kt",
+      "scope": "Username scoping/normalization and blank URI removal; in-memory persistence.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.PhotoStoreValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/humanresources/presentation/HrScreens.kt",
+      "scope": "Survey/activity form readiness, length truncation, options parsing and aggregate percentage bounds.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.HrFormValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/humanresources/presentation/HrViewModels.kt",
+      "scope": "Survey/activity required data, options minimum, management lifecycle and wellbeing aggregate loading.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.HrViewModelsValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/survey/presentation/SurveyViewModel.kt",
+      "scope": "Answer/root/reply blank guards, normalization, caching, successful aggregate refresh and permission/conflict handling.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.SurveyViewModelValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/survey/presentation/SurveyScreen.kt",
+      "scope": "Answer/reply truncation/readiness and form-to-viewmodel service contracts.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.SurveyFormValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/activity/presentation/ActivityViewModel.kt",
+      "scope": "Loaded OPEN activity, membership of selected option, pending-vote requirement and vote lifecycle.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.ActivityViewModelValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/activity/presentation/ActivityScreen.kt",
+      "scope": "First/change vote readiness and busy gate; form/service contracts.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.ActivityFormValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/report/presentation/ReportScreen.kt",
+      "scope": "Required category/title/description/priority, input caps, submit readiness and anonymous/identified flows.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.ReportFormValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/report/presentation/ReportViewModel.kt",
+      "scope": "Mine/all endpoint choice, creation callback and status transitions; backend enforces status/permission rules.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.ReportViewModelValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/ai/presentation/AiViewModel.kt",
+      "scope": "Conversation selection, blank titles/messages, busy guard, optimistic message lifecycle and stale history protection.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.AiViewModelValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/ai/presentation/AiScreen.kt",
+      "scope": "Rename/send readiness, whitespace handling and busy composer policy.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.AiFormValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/mood/presentation/HomeViewModel.kt",
+      "scope": "Valid no-mood/empty 200 states, enum serialization and mood lifecycle; rollover via fixed server responses.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.HomeViewModelValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/mood/presentation/HomeScreen.kt",
+      "scope": "One response per day readiness, submitting guard and unlock after server-driven reload.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.MoodFormValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/data/SessionStore.kt",
+      "scope": "Required persisted claims, legacy/immutable account identity, update/clear and restoration; injected in-memory preferences.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.SessionStoreValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/data/AppearanceStore.kt",
+      "scope": "Language/theme normalization, sign-out reset and immutable account preference isolation.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.AppearanceStoreValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/navigation/AppNavHost.kt",
+      "scope": "Exact EMPLOYEE/HR_MEMBER allowlist, malformed roles and persistence policy contracts; Compose effect unverified.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.MobileRoleValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/data/ApiClient.kt",
+      "scope": "Bearer attachment/auth-route bypass and session clear on protected 401; real OkHttp loopback.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.AccessTokenValidationTest"
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/presentation/UiComponents.kt",
+      "scope": "Safe known validation/permission/session/backend error translation.",
+      "suites": [
+        {
+          "name": "com.experimentos.mobile.validation.UserErrorValidationTest"
+        }
+      ]
+    }
+  ],
+  "excluded_candidates": [
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/AuthScreens.kt",
+      "reason": "LoginScreen delegates to AuthViewModel; RegisterScreen delegates to the same viewmodel/password policy. Checklist, mismatch text, visibility, loading and registration navigation are presentation/delegation, not independent input validators. Password saved-state behavior and Compose callbacks need device tests."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/activity/data/ActivityApi.kt",
+      "reason": "DTOs, enum-free API contracts; service annotations own no validation. Exercised by activity HTTP contracts."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/ai/data/AiApi.kt",
+      "reason": "DTOs and Retrofit contracts, no validation. Exercised by AI HTTP contract."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/data/AuthApi.kt",
+      "reason": "DTOs and Retrofit contracts, no validation. Exercised by repository HTTP suite."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/comment/data/CommentApi.kt",
+      "reason": "DTOs and Retrofit annotations, no independent input validation; answer/comment/reply service flows exercised in memory."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/mood/data/MoodApi.kt",
+      "reason": "Typed enum/DTOs and HTTP annotations, no runtime validator; all moods exercised."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/data/ProfileApi.kt",
+      "reason": "DTOs/Retrofit declarations, no independent validation; HTTP and in-memory account contracts exercised."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/report/data/ReportApi.kt",
+      "reason": "DTOs/Retrofit declarations, no independent validation; report serialization exercised."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/survey/data/SurveyApi.kt",
+      "reason": "Typed survey enum and Retrofit declarations, no independent runtime validator."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/presentation/ProfileScreen.kt",
+      "reason": "Delegates account validation to settings/viewmodel, storage to PhotoStore. Display fallbacks, feedback and platform photo URI/permission/bitmap plumbing are not independent user validators; picker/device lifecycle unverified."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/data/LegalLinks.kt",
+      "reason": "Static privacy-policy URL, no validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/presentation/AppLocalization.kt",
+      "reason": "Translation/display labels/fallbacks; no input, authorization or business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/presentation/SafeSpaceTopBar.kt",
+      "reason": "Visual composition and callback plumbing."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/presentation/DesignComponents.kt",
+      "reason": "Visual components and name/status formatting; no independent validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/designsystem/WellbeingTheme.kt",
+      "reason": "Theme rendering selection and color definitions, no accepted-input policy; normalization belongs to AppearanceStore."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/designsystem/StatusColors.kt",
+      "reason": "Visual status-color mapping. Existing one test retained outside validation counts."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/MainActivity.kt",
+      "reason": "Application composition, system-bar and splash animation delays; no independent input validation. Actual splash timers/device lifecycle unverified."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/WellbeingApplication.kt",
+      "reason": "Application container construction, no input validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/activity/presentation/ActivityViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/ai/presentation/AiViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/AuthViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/humanresources/presentation/HrViewModelFactories.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/mood/presentation/HomeViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/presentation/ProfileViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/report/presentation/ReportViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/survey/presentation/SurveyViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    }
+  ]
+}

@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /** Stores non-sensitive presentation preferences locally for immediate UI updates. */
-class AppearanceStore(context: Context) {
-    private val preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+class AppearanceStore internal constructor(private val preferences: android.content.SharedPreferences) {
+    constructor(context: Context) : this(context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE))
     private var activeAccountKey: String? = null
     private val mutableTheme = MutableStateFlow(DEFAULT_THEME)
     val theme: StateFlow<String> = mutableTheme.asStateFlow()

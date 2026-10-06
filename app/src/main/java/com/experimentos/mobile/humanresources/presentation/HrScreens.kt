@@ -97,6 +97,14 @@ import kotlin.math.roundToInt
 
 private val spanishLocale = Locale.forLanguageTag("es-ES")
 
+internal fun hrTitleInput(value: String): String = value.take(120)
+internal fun hrDetailInput(value: String): String = value.take(500)
+internal fun hrOptionsInput(value: String): String = value.take(1000)
+internal fun canCreateSurvey(title: String, question: String, submitting: Boolean): Boolean =
+    title.isNotBlank() && question.isNotBlank() && !submitting
+internal fun canCreateActivity(title: String, options: String, submitting: Boolean): Boolean =
+    title.isNotBlank() && options.lines().count(String::isNotBlank) >= 2 && !submitting
+
 private data class MoodCategory(
     val mood: Mood,
     val label: String,
@@ -437,7 +445,7 @@ private fun formatDashboardDate(rawDate: String?, strings: com.experimentos.mobi
     return formatter.format(date).replaceFirstChar { it.titlecase(locale) }
 }
 
-private fun calculatePercentage(part: Long, total: Long): Int {
+internal fun calculatePercentage(part: Long, total: Long): Int {
     if (total <= 0L) return 0
     return (part.coerceAtLeast(0L).toDouble() / total.toDouble() * 100)
         .roundToInt()
@@ -1182,7 +1190,7 @@ private fun CreateSurveyDialog(
     var question by remember { mutableStateOf("") }
     var type by remember { mutableStateOf(SurveyType.DAILY) }
     var comments by remember { mutableStateOf(true) }
-    val canCreate = title.isNotBlank() && question.isNotBlank() && !isSubmitting
+    val canCreate = canCreateSurvey(title, question, isSubmitting)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -1200,7 +1208,7 @@ private fun CreateSurveyDialog(
                 errorMessage?.let { InlineError(it) }
                 OutlinedTextField(
                     value = title,
-                    onValueChange = { title = it.take(120) },
+                    onValueChange = { title = hrTitleInput(it) },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(strings.t("Título")) },
                     placeholder = { Text(strings.t("Ej. Encuesta del día")) },
@@ -1209,7 +1217,7 @@ private fun CreateSurveyDialog(
                 )
                 OutlinedTextField(
                     value = question,
-                    onValueChange = { question = it.take(500) },
+                    onValueChange = { question = hrDetailInput(it) },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(strings.t("Pregunta")) },
                     placeholder = { Text(strings.t("¿Cómo fue tu jornada hoy?")) },
@@ -1282,7 +1290,7 @@ private fun CreateActivityDialog(
     var description by remember { mutableStateOf("") }
     var options by remember { mutableStateOf("") }
     val optionCount = options.lines().count(String::isNotBlank)
-    val canCreate = title.isNotBlank() && optionCount >= 2 && !isSubmitting
+    val canCreate = canCreateActivity(title, options, isSubmitting)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -1300,7 +1308,7 @@ private fun CreateActivityDialog(
                 errorMessage?.let { InlineError(it) }
                 OutlinedTextField(
                     value = title,
-                    onValueChange = { title = it.take(120) },
+                    onValueChange = { title = hrTitleInput(it) },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(strings.t("Título")) },
                     placeholder = { Text(strings.t("Ej. Actividad del fin de semana")) },
@@ -1308,7 +1316,7 @@ private fun CreateActivityDialog(
                 )
                 OutlinedTextField(
                     value = description,
-                    onValueChange = { description = it.take(500) },
+                    onValueChange = { description = hrDetailInput(it) },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(strings.t("Descripción (opcional)")) },
                     placeholder = { Text(strings.t("Añade contexto para la votación")) },
@@ -1317,7 +1325,7 @@ private fun CreateActivityDialog(
                 )
                 OutlinedTextField(
                     value = options,
-                    onValueChange = { options = it.take(1000) },
+                    onValueChange = { options = hrOptionsInput(it) },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(strings.t("Opciones")) },
                     placeholder = { Text(strings.t("Una opción por línea")) },

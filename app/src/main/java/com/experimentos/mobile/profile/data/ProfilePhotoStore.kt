@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.core.content.edit
 
 /** Stores the selected local avatar URI separately for each signed-in username. */
-class ProfilePhotoStore(context: Context) {
-    private val preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+class ProfilePhotoStore internal constructor(private val preferences: android.content.SharedPreferences) {
+    constructor(context: Context) : this(context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE))
 
     fun getUri(username: String): String? = preferences.getString(keyFor(username), null)
 

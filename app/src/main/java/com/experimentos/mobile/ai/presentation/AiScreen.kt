@@ -76,6 +76,9 @@ import com.experimentos.mobile.shared.presentation.ErrorState
 import com.experimentos.mobile.shared.presentation.LocalAppStrings
 import com.experimentos.mobile.shared.presentation.LoadingState
 
+internal fun canRenameAiConversation(title: String): Boolean = title.isNotBlank()
+internal fun canSendAiMessage(message: String, enabled: Boolean): Boolean = enabled && message.isNotBlank()
+
 @Composable
 fun AiScreen(
     aiApi: AiApi,
@@ -470,7 +473,7 @@ private fun RenameConversationDialog(
             )
         },
         confirmButton = {
-            Button(onClick = { onConfirm(title) }, enabled = title.isNotBlank()) {
+            Button(onClick = { onConfirm(title) }, enabled = canRenameAiConversation(title)) {
                 Text(strings.t("Guardar"))
             }
         },
@@ -596,7 +599,7 @@ private fun MessageComposer(
         )
         FilledIconButton(
             onClick = onSend,
-            enabled = enabled && message.isNotBlank(),
+            enabled = canSendAiMessage(message, enabled),
             modifier = Modifier.size(52.dp),
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = MaterialTheme.colorScheme.primary,

@@ -80,6 +80,9 @@ private const val WEEKLY_DESTINATION = "weekly"
  * The hub keeps survey and activity workflows discoverable while each detail
  * destination keeps its content focused and makes the back action predictable.
  */
+internal fun surveyTextInput(value: String): String = value.take(1000)
+internal fun canSubmitSurveyText(value: String, submitting: Boolean): Boolean = value.isNotBlank() && !submitting
+
 @Composable
 fun SurveysScreen(
     surveyApi: SurveyApi,
@@ -515,7 +518,7 @@ private fun SurveyCard(
             } else {
                 OutlinedTextField(
                     value = answerText,
-                    onValueChange = { answerText = it.take(1000) },
+                    onValueChange = { answerText = surveyTextInput(it) },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(strings.t("Tu respuesta")) },
                     placeholder = { Text(strings.t("Escribe tu respuesta...")) },
@@ -524,7 +527,7 @@ private fun SurveyCard(
                 )
                 Button(
                     onClick = { onAnswer(survey.id, answerText) },
-                    enabled = answerText.isNotBlank() && !state.isSubmitting,
+                    enabled = canSubmitSurveyText(answerText, state.isSubmitting),
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(strings.t("Enviar respuesta"))
@@ -654,7 +657,7 @@ private fun CommentItem(
         if (replying) {
             OutlinedTextField(
                 value = replyText,
-                onValueChange = { replyText = it.take(1000) },
+                onValueChange = { replyText = surveyTextInput(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp),
@@ -668,7 +671,7 @@ private fun CommentItem(
             replyText = ""
             replying = false
         },
-                enabled = replyText.isNotBlank() && !isSubmitting,
+                enabled = canSubmitSurveyText(replyText, isSubmitting),
                 modifier = Modifier.padding(start = 16.dp),
             ) {
                 Text(strings.t("Publicar respuesta"))

@@ -1,0 +1,3273 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-10-06T02:26:54.3975720Z",
+  "command": "gradlew -p M:\\ :app:testDebugUnitTest --rerun :app:assembleDebug :app:lintDebug :app:validationDependencyInventory --console=plain",
+  "command_exit_code": 0,
+  "source_files_scanned": 51,
+  "minimum_cases_per_owner": 20,
+  "owner_count": 25,
+  "validation_case_count": 507,
+  "total_executed_case_count": 508,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "owners": [
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/AuthViewModel.kt",
+      "scope": "Required inputs, display-name range, matching passwords, registration policy and busy registration; repository/session lifecycle.",
+      "actual_case_count": 20,
+      "unit_case_count": 12,
+      "integration_case_count": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.AuthViewModelValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 12,
+          "integration_case_count": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:login-empty-identifier]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:login-blank-password]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-success-persists-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-network-failure-no-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-invalid-credentials]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-pending-state]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-empty-name]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-empty-username]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-empty-email]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-empty-password]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-empty-confirmation]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-name-below-minimum]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-name-above-maximum]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-password-mismatch]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-password-requirements]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:register-bcrypt-byte-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-minimum-name-and-normalization]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-maximum-name-and-72-bytes]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-busy-guard]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-conflict-clear-message]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/PasswordRecoveryViewModel.kt",
+      "scope": "Recovery identifier/token/password guards, minimum length and request/reset lifecycle.",
+      "actual_case_count": 20,
+      "unit_case_count": 8,
+      "integration_case_count": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.RecoveryValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 8,
+          "integration_case_count": 12,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:request-empty]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:request-whitespace]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-username-normalized]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-email-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-loading]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-network-error]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-server-details-hidden]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:confirm-empty-token]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:confirm-blank-token]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:confirm-empty-password]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:confirm-empty-confirmation]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:confirm-mismatch]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:confirm-seven-characters]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-eight-characters]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-password-not-trimmed]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-loading]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-expired-token]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-network-failure-retains-request]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-retry-after-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-invalid-input-retains-request]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/domain/RegistrationPasswordPolicy.kt",
+      "scope": "Unicode categories/code points, required character classes and UTF-8 bcrypt limit.",
+      "actual_case_count": 20,
+      "unit_case_count": 20,
+      "integration_case_count": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.PasswordBoundaryTest",
+          "actual_case_count": 17,
+          "unit_case_count": 17,
+          "integration_case_count": 0,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:empty]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:seven-codepoints]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:eight-codepoints]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:no-upper]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:no-lower]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:no-digit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:no-symbol]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:space-not-symbol]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:control-not-symbol]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:nbsp-not-symbol]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unicode-upper]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unicode-digit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:emoji-symbol]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:72-bytes]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:73-bytes]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:multibyte-72]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:surrogate-count-not-length]",
+              "type": "unit",
+              "status": "passed"
+            }
+          ]
+        },
+        {
+          "suite": "com.experimentos.mobile.authentication.domain.RegistrationPasswordPolicyTest",
+          "actual_case_count": 3,
+          "unit_case_count": 3,
+          "integration_case_count": 0,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "rejectsEveryMissingRequirementAndWhitespaceAsASpecialCharacter",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "acceptsValidPasswordsIncludingAccentsAndSymbols",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "enforcesTheBcryptUtf8ByteLimit",
+              "type": "unit",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/domain/AuthRepository.kt",
+      "scope": "Response token guard, normalization and real Retrofit/Gson request-response contracts against loopback.",
+      "actual_case_count": 20,
+      "unit_case_count": 0,
+      "integration_case_count": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.AuthRepositoryContractTest",
+          "actual_case_count": 20,
+          "unit_case_count": 0,
+          "integration_case_count": 20,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[integration:login-wire-fields]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-endpoint]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-immutable-user-id]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-legacy-null-id]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-role-preserved-for-navigation-guard]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-401-result-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-malformed-json-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-wire-snake-case]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-endpoint-and-password-preservation]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-empty-response-token-rejected]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-whitespace-response-token-rejected]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:register-conflict-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-recovery-identifier-trim]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-recovery-endpoint]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-recovery-server-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:request-recovery-unicode-identifier]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-token-trim-password-preserved]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-endpoint-and-schema]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-expired-token-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:confirm-malformed-response-failure]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/AuthErrorMapper.kt",
+      "scope": "Safe translation of known validation errors; credentials/server details hidden.",
+      "actual_case_count": 20,
+      "unit_case_count": 19,
+      "integration_case_count": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.AuthErrorValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 19,
+          "integration_case_count": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:username-conflict]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:email-conflict]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:password-mismatch]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:special-character]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:bcrypt-byte-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:password-minimum]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:invalid-credentials-validation]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:expired-reset-token]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unknown-validation-is-safe]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unknown-conflict-is-safe]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unknown-unprocessable-is-safe]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:401-hides-details]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:403-hides-details]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:500-hides-details]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:503-hides-details]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:network-details-hidden]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:runtime-details-hidden]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:json-message-case-insensitive]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:json-message-overrides-unrelated-body]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:http-repository-to-auth-message]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/presentation/ProfileSettingsScreen.kt",
+      "scope": "Username and display-name limits, Android email pattern and saving gate; JVM Robolectric, no Compose interaction.",
+      "actual_case_count": 20,
+      "unit_case_count": 16,
+      "integration_case_count": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.ProfileFormValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 16,
+          "integration_case_count": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:username-below-min]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:username-at-min]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:username-at-max]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:username-above-max]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:username-unicode-rejected]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:username-internal-space-rejected]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:username-punctuation-allowed]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:username-padded-normalized]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:email-valid-trimmed]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:email-missing-domain]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:email-internal-space]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:name-below-min]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:name-at-max]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:name-above-max]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:valid-name-disabled-during-save]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:invalid-username-disabled-while-idle]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:name-form-to-profile-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:username-form-to-profile-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:email-form-to-profile-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:invalid-email-form-no-api-call]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/presentation/ProfileViewModel.kt",
+      "scope": "Account input normalization and preference/session synchronization; server retains final validation authority.",
+      "actual_case_count": 20,
+      "unit_case_count": 0,
+      "integration_case_count": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.ProfileViewModelValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 0,
+          "integration_case_count": 20,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[integration:initial-load-syncs-local-preferences]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:profile-load-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:profile-load-retry]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:profile-load-pending]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:preferences-english-dark]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:preferences-spanish-light]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:preferences-authoritative-response-normalized]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:preferences-failure-keeps-profile]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:preferences-pending-state]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-trims-fields]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-empty-email-is-null]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-blank-email-is-null]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-updates-session-token-claims]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-update-without-session-does-not-login]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-email-conflict-safe-message]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-failure-keeps-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-pending-state]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:feedback-clear-retains-profile]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-server-preferences-scoped-to-id]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:profile-http-snake-case-contract]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/data/ProfilePhotoStore.kt",
+      "scope": "Username scoping/normalization and blank URI removal; in-memory persistence.",
+      "actual_case_count": 20,
+      "unit_case_count": 0,
+      "integration_case_count": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.PhotoStoreValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 0,
+          "integration_case_count": 20,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[integration:null-removes]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:empty-removes]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:space-removes]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:tab-removes]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:newline-removes]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:unicode-space-removes]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:username-case-normalized]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:username-leading-space]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:username-trailing-space]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:username-newline-trimmed]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:username-unicode-case]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:username-period-retained]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:uri-round-trip]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-isolation]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:deletion-isolated]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:overwrite-existing-photo]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:missing-account-null]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:uri-is-not-normalized]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:deletion-is-idempotent]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:normalization-does-not-collapse-internal-spaces]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/humanresources/presentation/HrScreens.kt",
+      "scope": "Survey/activity form readiness, length truncation, options parsing and aggregate percentage bounds.",
+      "actual_case_count": 27,
+      "unit_case_count": 23,
+      "integration_case_count": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.HrFormValidationTest",
+          "actual_case_count": 27,
+          "unit_case_count": 23,
+          "integration_case_count": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:title-below-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:title-at-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:title-over-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:detail-below-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:detail-at-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:detail-over-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:options-below-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:options-at-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:options-over-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:survey-blank-title]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:survey-blank-question]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:survey-busy]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:activity-one-option]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:activity-blank-title]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:activity-busy]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:activity-windows-newlines]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:daily-survey-form-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:weekly-survey-form-no-comments-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:activity-form-normalized-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:truncated-options-cannot-create-one-option]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:percentage-zero-total]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:percentage-negative-total]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:percentage-negative-part]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:percentage-rounding]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:percentage-half]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:percentage-clamped-above-total]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:percentage-large-count-no-integer-overflow]",
+              "type": "unit",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/humanresources/presentation/HrViewModels.kt",
+      "scope": "Survey/activity required data, options minimum, management lifecycle and wellbeing aggregate loading.",
+      "actual_case_count": 20,
+      "unit_case_count": 4,
+      "integration_case_count": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.HrViewModelsValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 4,
+          "integration_case_count": 16,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:survey-blank-title-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:survey-blank-question-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:activity-blank-title-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:activity-single-option-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:survey-create-normalizes-and-prepends]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:survey-create-forbidden]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:activity-two-options-normalized]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:activity-optional-description-empty]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:activity-create-failure-preserves-list]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:publish-replaces-survey]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:close-removes-survey]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:status-failure-preserves-survey]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:close-activity-removes-item]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:close-activity-failure-preserves-item]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-partial-failure-not-published]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:reload-clears-comments-and-selection]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:comments-collapse-reopen-cached]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:comments-failure-isolated]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:wellbeing-summary-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:wellbeing-summary-failure-retry]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/survey/presentation/SurveyViewModel.kt",
+      "scope": "Answer/root/reply blank guards, normalization, caching, successful aggregate refresh and permission/conflict handling.",
+      "actual_case_count": 20,
+      "unit_case_count": 4,
+      "integration_case_count": 16,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.SurveyViewModelValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 4,
+          "integration_case_count": 16,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:answer-empty-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:answer-whitespace-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:root-comment-empty-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:reply-blank-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-failure-and-retry]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:answer-trim-refresh-count-and-comments]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:answer-conflict-not-marked-answered]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:answer-closed-survey-error]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:answer-refresh-failures-preserve-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:comments-collapse-reopen-uses-cache]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:comments-separate-survey-caches]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:comments-load-failure-retry]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:root-comment-trim-and-refresh]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:reply-retains-parent-id]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:reply-forbidden-not-added]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:like-refreshes-likes]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:delete-refreshes-thread]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:delete-forbidden-clear-feedback]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:like-failure-does-not-refresh]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/survey/presentation/SurveyScreen.kt",
+      "scope": "Answer/reply truncation/readiness and form-to-viewmodel service contracts.",
+      "actual_case_count": 20,
+      "unit_case_count": 15,
+      "integration_case_count": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.SurveyFormValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 15,
+          "integration_case_count": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:empty-input]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:below-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:at-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:over-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:multiline-preserved]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unicode-preserved]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:padding-preserved-until-submit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:utf16-limit-preserved]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:large-paste-truncated]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:empty-disabled]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:spaces-disabled]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:newlines-disabled]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unicode-space-disabled]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:text-enabled]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:busy-disabled]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:answer-input-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:answer-at-boundary-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:root-input-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:reply-input-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:blank-form-blocks-answer-api]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/activity/presentation/ActivityViewModel.kt",
+      "scope": "Loaded OPEN activity, membership of selected option, pending-vote requirement and vote lifecycle.",
+      "actual_case_count": 20,
+      "unit_case_count": 7,
+      "integration_case_count": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.ActivityViewModelValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 7,
+          "integration_case_count": 13,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:unknown-activity-rejected]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:closed-activity-rejected]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unknown-option-rejected]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:option-of-other-activity-rejected]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:empty-options-rejected]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:vote-without-selection-no-api]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:vote-other-activity-no-api]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:choose-first-option]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:choose-replaces-pending]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:invalid-choice-preserves-valid-pending]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-list-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-empty-is-valid]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-network-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:reload-after-error]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:vote-success-refreshes-aggregates]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:change-vote-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:vote-forbidden-retains-pending]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:vote-retry-after-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:vote-refresh-failure-preserves-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:vote-loading-lifecycle]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/activity/presentation/ActivityScreen.kt",
+      "scope": "First/change vote readiness and busy gate; form/service contracts.",
+      "actual_case_count": 20,
+      "unit_case_count": 8,
+      "integration_case_count": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.ActivityFormValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 8,
+          "integration_case_count": 12,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:no-vote-no-pending]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:first-vote-ready]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:first-vote-busy]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:existing-no-change]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:same-option-no-change]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:changed-option-ready]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:changed-option-busy]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:existing-no-change-busy]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:valid-choice-enables-button]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:unknown-choice-does-not-enable]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:closed-choice-does-not-enable]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:unknown-activity-does-not-enable]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:foreign-option-does-not-enable]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:vote-success-disables-no-change]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:vote-failure-enables-retry]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:pending-vote-disables-button]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:select-same-committed-vote-disabled]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:select-new-committed-vote-enabled]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:selection-isolated-between-cards]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:form-vote-http-option-id-contract]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/report/presentation/ReportScreen.kt",
+      "scope": "Required category/title/description/priority, input caps, submit readiness and anonymous/identified flows.",
+      "actual_case_count": 20,
+      "unit_case_count": 17,
+      "integration_case_count": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.ReportFormValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 17,
+          "integration_case_count": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:category-empty]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:category-blank]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:title-empty]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:title-blank]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:description-empty]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:description-blank]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:priority-empty]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:priority-blank]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:first-error-order]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:busy-valid-form-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:minimal-valid-form]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:padded-fields-accepted]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:title-below-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:title-at-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:title-over-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:description-at-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:description-over-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:anonymous-report-flow]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:identified-report-flow]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:invalid-form-blocks-submit]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/report/presentation/ReportViewModel.kt",
+      "scope": "Mine/all endpoint choice, creation callback and status transitions; backend enforces status/permission rules.",
+      "actual_case_count": 20,
+      "unit_case_count": 1,
+      "integration_case_count": 19,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.ReportViewModelValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 1,
+          "integration_case_count": 19,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:employee-initial-no-fetch]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:hr-initial-fetches-all]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:employee-fetches-only-mine]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:empty-list-valid]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-retry-clears-error]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:anonymous-create]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:identified-create]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:create-callback-only-on-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:create-validation-failure-no-callback]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:create-network-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:create-loading-lifecycle]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:status-in-review]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:status-resolved]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:status-dismissed]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:status-unknown-id-does-not-insert]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:status-forbidden-preserves-list]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:status-retry-clears-error]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:clear-feedback-retains-data]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:report-http-contract]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/ai/presentation/AiViewModel.kt",
+      "scope": "Conversation selection, blank titles/messages, busy guard, optimistic message lifecycle and stale history protection.",
+      "actual_case_count": 20,
+      "unit_case_count": 3,
+      "integration_case_count": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.AiViewModelValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 3,
+          "integration_case_count": 17,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:send-without-conversation-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:rename-blank-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:send-blank-blocked]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:list-conversations-success]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:list-conversations-failure-retry]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:create-selects-new-and-clears-messages]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:create-failure-preserves-list]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:select-loads-history]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:stale-history-response-ignored]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:stale-history-error-ignored]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:send-trim-language-and-optimistic-replacement]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:send-busy-guard]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:selection-and-clear-guard-during-send]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:send-failure-removes-optimistic-message]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:rename-trims-and-updates-matching-only]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:rename-failure-preserves-title]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:delete-selected-clears-history]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:delete-other-preserves-selected-history]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:delete-forbidden-preserves-selection]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:ai-http-local-contract]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/ai/presentation/AiScreen.kt",
+      "scope": "Rename/send readiness, whitespace handling and busy composer policy.",
+      "actual_case_count": 20,
+      "unit_case_count": 16,
+      "integration_case_count": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.AiFormValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 16,
+          "integration_case_count": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:rename-empty]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:rename-space]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:rename-tab-newline]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:rename-unicode-space]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:rename-normal]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:rename-padded]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:rename-unicode]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:rename-no-client-length-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:message-empty]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:message-space]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:message-newline-tab]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:message-unicode-space]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:message-normal]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:message-multiline]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:message-disabled-while-busy]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:message-no-client-length-limit]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:rename-form-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:send-form-to-api]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:busy-composer-blocks-duplicate]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:blank-rename-form-no-api]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/mood/presentation/HomeViewModel.kt",
+      "scope": "Valid no-mood/empty 200 states, enum serialization and mood lifecycle; rollover via fixed server responses.",
+      "actual_case_count": 20,
+      "unit_case_count": 0,
+      "integration_case_count": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.HomeViewModelValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 0,
+          "integration_case_count": 20,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[integration:load-very-bad]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-bad]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-good]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-very-good]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-very-bad]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-bad]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-good]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-very-good]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:no-mood-null-valid]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:empty-200-eof-valid]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:network-failure-is-error]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:unauthorized-is-error]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:load-pending-state]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:retry-load-clears-error]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-failure-retains-previous-mood]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-uses-server-mood]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-pending-state]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-retry-after-failure]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:reload-day-rollover-is-server-driven]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:mood-http-serialization]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/mood/presentation/HomeScreen.kt",
+      "scope": "One response per day readiness, submitting guard and unlock after server-driven reload.",
+      "actual_case_count": 20,
+      "unit_case_count": 7,
+      "integration_case_count": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.MoodFormValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 7,
+          "integration_case_count": 13,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:no-mood-ready]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:no-mood-submitting]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:very-bad-recorded]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:bad-recorded]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:good-recorded]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:very-good-recorded]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:recorded-and-busy]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:loaded-very-bad-locks-form]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:loaded-bad-locks-form]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:loaded-good-locks-form]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:loaded-very-good-locks-form]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:very-bad-form-flow]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:bad-form-flow]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:good-form-flow]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:very-good-form-flow]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:first-day-null-enables-form]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:empty-200-enables-form]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-pending-blocks-another-selection]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:submit-failure-enables-retry]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:day-rollover-server-reload-unlocks-form]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/data/SessionStore.kt",
+      "scope": "Required persisted claims, legacy/immutable account identity, update/clear and restoration; injected in-memory preferences.",
+      "actual_case_count": 20,
+      "unit_case_count": 11,
+      "integration_case_count": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.SessionStoreValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 11,
+          "integration_case_count": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:missing-token]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:empty-token]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:blank-token]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:missing-username]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:empty-username]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:blank-username]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:missing-role]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:empty-role]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:blank-role]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:missing-display-name-falls-back]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:blank-display-name-falls-back]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:save-and-recreate]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:legacy-id-is-absent]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:legacy-overwrite-removes-old-id]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:immutable-id-survives-rename]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:update-without-session-no-op]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:update-replaces-token-and-id]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:clear-removes-all-claims]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:immediate-clear-observable]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:clear-is-idempotent]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/data/AppearanceStore.kt",
+      "scope": "Language/theme normalization, sign-out reset and immutable account preference isolation.",
+      "actual_case_count": 20,
+      "unit_case_count": 12,
+      "integration_case_count": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.AppearanceStoreValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 12,
+          "integration_case_count": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:dark]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:case-insensitive-dark]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:light]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unknown-theme-default]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:blank-theme-default]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:padded-theme-default]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:english]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:uppercase-english]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:spanish]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unknown-language-default]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:blank-language-default]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:padded-language-default]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:account-round-trip]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:cross-account-isolation]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:signout-defaults]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:blank-account-is-unscoped]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:signed-out-changes-not-persisted]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:server-sync-normalizes-and-persists]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:server-sync-invalid-defaults]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:corrupt-persisted-values-default]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/navigation/AppNavHost.kt",
+      "scope": "Exact EMPLOYEE/HR_MEMBER allowlist, malformed roles and persistence policy contracts; Compose effect unverified.",
+      "actual_case_count": 20,
+      "unit_case_count": 16,
+      "integration_case_count": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.MobileRoleValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 16,
+          "integration_case_count": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:employee-allowed]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:hr-allowed]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:system-admin-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unknown-role-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:empty-role-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:blank-role-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:lowercase-employee-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:lowercase-hr-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:leading-space-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:trailing-space-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:newline-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:null-string-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:multiple-roles-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:role-prefix-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:unicode-confusable-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:zero-width-suffix-denied]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:persisted-employee-policy]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:persisted-hr-policy]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:persisted-admin-policy-clears-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:persisted-unknown-policy-clears-session]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/data/ApiClient.kt",
+      "scope": "Bearer attachment/auth-route bypass and session clear on protected 401; real OkHttp loopback.",
+      "actual_case_count": 20,
+      "unit_case_count": 0,
+      "integration_case_count": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.AccessTokenValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 0,
+          "integration_case_count": 20,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[integration:no-session-no-header]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:empty-token-no-header]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:spaces-token-no-header]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:tab-token-no-header]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:profile-bearer-attached]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:survey-bearer-attached]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:report-bearer-attached]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:ai-bearer-attached]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:login-bypasses-bearer]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:registration-bypasses-bearer]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:recovery-request-bypasses-bearer]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:recovery-confirm-bypasses-bearer]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:auth-prefix-lookalike-protected]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:auth-root-without-slash-protected]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:protected-401-clears-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:protected-403-retains-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:protected-500-retains-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:protected-503-retains-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:public-401-does-not-clear-existing-session]",
+              "type": "integration",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:cleared-session-not-sent-on-next-request]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/presentation/UiComponents.kt",
+      "scope": "Safe known validation/permission/session/backend error translation.",
+      "actual_case_count": 20,
+      "unit_case_count": 19,
+      "integration_case_count": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "suites": [
+        {
+          "suite": "com.experimentos.mobile.validation.UserErrorValidationTest",
+          "actual_case_count": 20,
+          "unit_case_count": 19,
+          "integration_case_count": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0,
+          "cases": [
+            {
+              "name": "scenario[unit:400-username]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:409-username]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:400-email]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:409-email]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:already-answered]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:survey-closed]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:400-unknown]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:409-unknown]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:401-session-invalid]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:403-permission]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:404-not-found]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:503-assistant-unavailable]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:500-caller-fallback]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:422-caller-fallback]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:io-details-hidden]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:runtime-caller-fallback]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:json-field-case-insensitive]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:json-selected-message-not-debug]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[unit:empty-error-body-fallback]",
+              "type": "unit",
+              "status": "passed"
+            },
+            {
+              "name": "scenario[integration:http-profile-error-to-user-message]",
+              "type": "integration",
+              "status": "passed"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "additional_suites": [
+    {
+      "suite": "com.experimentos.mobile.shared.designsystem.StatusColorsTest",
+      "actual_case_count": 1,
+      "unit_case_count": 1,
+      "integration_case_count": 0,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "cases": [
+        {
+          "name": "successHasSufficientContrastOnLightAndDarkSurfaces",
+          "type": "unit",
+          "status": "passed"
+        }
+      ]
+    }
+  ],
+  "excluded_candidates": [
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/AuthScreens.kt",
+      "reason": "LoginScreen delegates to AuthViewModel; RegisterScreen delegates to the same viewmodel/password policy. Checklist, mismatch text, visibility, loading and registration navigation are presentation/delegation, not independent input validators. Password saved-state behavior and Compose callbacks need device tests."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/activity/data/ActivityApi.kt",
+      "reason": "DTOs, enum-free API contracts; service annotations own no validation. Exercised by activity HTTP contracts."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/ai/data/AiApi.kt",
+      "reason": "DTOs and Retrofit contracts, no validation. Exercised by AI HTTP contract."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/data/AuthApi.kt",
+      "reason": "DTOs and Retrofit contracts, no validation. Exercised by repository HTTP suite."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/comment/data/CommentApi.kt",
+      "reason": "DTOs and Retrofit annotations, no independent input validation; answer/comment/reply service flows exercised in memory."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/mood/data/MoodApi.kt",
+      "reason": "Typed enum/DTOs and HTTP annotations, no runtime validator; all moods exercised."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/data/ProfileApi.kt",
+      "reason": "DTOs/Retrofit declarations, no independent validation; HTTP and in-memory account contracts exercised."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/report/data/ReportApi.kt",
+      "reason": "DTOs/Retrofit declarations, no independent validation; report serialization exercised."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/survey/data/SurveyApi.kt",
+      "reason": "Typed survey enum and Retrofit declarations, no independent runtime validator."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/presentation/ProfileScreen.kt",
+      "reason": "Delegates account validation to settings/viewmodel, storage to PhotoStore. Display fallbacks, feedback and platform photo URI/permission/bitmap plumbing are not independent user validators; picker/device lifecycle unverified."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/data/LegalLinks.kt",
+      "reason": "Static privacy-policy URL, no validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/presentation/AppLocalization.kt",
+      "reason": "Translation/display labels/fallbacks; no input, authorization or business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/presentation/SafeSpaceTopBar.kt",
+      "reason": "Visual composition and callback plumbing."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/presentation/DesignComponents.kt",
+      "reason": "Visual components and name/status formatting; no independent validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/designsystem/WellbeingTheme.kt",
+      "reason": "Theme rendering selection and color definitions, no accepted-input policy; normalization belongs to AppearanceStore."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/shared/designsystem/StatusColors.kt",
+      "reason": "Visual status-color mapping. Existing one test retained outside validation counts."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/MainActivity.kt",
+      "reason": "Application composition, system-bar and splash animation delays; no independent input validation. Actual splash timers/device lifecycle unverified."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/WellbeingApplication.kt",
+      "reason": "Application container construction, no input validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/activity/presentation/ActivityViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/ai/presentation/AiViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/authentication/presentation/AuthViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/humanresources/presentation/HrViewModelFactories.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/mood/presentation/HomeViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/profile/presentation/ProfileViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/report/presentation/ReportViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    },
+    {
+      "source": "app/src/main/java/com/experimentos/mobile/survey/presentation/SurveyViewModelFactory.kt",
+      "reason": "ViewModelProvider model-class require/type casts are boilerplate factories, not user input/security/business validation."
+    }
+  ],
+  "unclassified_sources": [],
+  "orphaned_sources": [],
+  "limitations": [
+    "No instrumented coverage percentages",
+    "No Compose UI interaction/device/emulator E2E",
+    "No Android Keystore encryption or system photo picker",
+    "No real backend/Firebase/Gemini/Render calls",
+    "No release build/security assessment implied",
+    "In-memory SharedPreferences do not model disk durability/threading/Keystore",
+    "Robolectric SDK 35 only for Android email pattern",
+    "UI animation/feedback timers are not exercised"
+  ]
+}

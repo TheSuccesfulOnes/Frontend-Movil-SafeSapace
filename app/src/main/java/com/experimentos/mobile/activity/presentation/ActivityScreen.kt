@@ -42,6 +42,11 @@ import com.experimentos.mobile.shared.presentation.LocalAppStrings
 import com.experimentos.mobile.shared.presentation.ScreenHeader
 import com.experimentos.mobile.shared.presentation.SoftTag
 
+internal fun canSubmitActivityVote(selected: Long?, pending: Long?, submitting: Boolean): Boolean {
+    val displayed = pending ?: selected
+    return displayed != null && displayed != selected && !submitting
+}
+
 @Composable
 fun ActivitiesScreen(activityApi: ActivityApi, modifier: Modifier = Modifier) {
     val strings = LocalAppStrings.current
@@ -99,7 +104,6 @@ fun ActivityCard(
 ) {
     val strings = LocalAppStrings.current
     val displayedOptionId = pendingOptionId ?: selectedOptionId
-    val canVote = displayedOptionId != null && displayedOptionId != selectedOptionId
 
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -130,7 +134,7 @@ fun ActivityCard(
             }
             Button(
                 onClick = onVote,
-                enabled = canVote && !isSubmitting,
+                enabled = canSubmitActivityVote(selectedOptionId, pendingOptionId, isSubmitting),
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,

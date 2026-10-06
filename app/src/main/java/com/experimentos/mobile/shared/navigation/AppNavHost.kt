@@ -50,6 +50,8 @@ private enum class EmployeeScreen(val label: String) {
     PROFILE("Perfil"),
 }
 
+internal fun isMobileRoleAllowed(role: String): Boolean = role == "EMPLOYEE" || role == "HR_MEMBER"
+
 private enum class HrScreen(val label: String) {
     HOME("Inicio"),
     CONTENT("Gestión"),
@@ -84,7 +86,7 @@ fun AppNavHost(
     }
 
     // SYSTEM_ADMIN is intentionally not given a mobile destination.
-    if (session.role != "EMPLOYEE" && session.role != "HR_MEMBER") {
+    if (!isMobileRoleAllowed(session.role)) {
         LaunchedEffect(session.role) { sessionStore.clear() }
         LoadingState(Modifier.padding(24.dp))
         return

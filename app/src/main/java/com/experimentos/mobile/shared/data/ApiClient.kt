@@ -18,7 +18,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-private class AccessTokenInterceptor(private val sessionStore: SessionStore) : Interceptor {
+internal class AccessTokenInterceptor(private val sessionStore: SessionStore) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         if (chain.request().url.encodedPath.startsWith("/api/v1/auth/")) {
             return chain.proceed(chain.request())

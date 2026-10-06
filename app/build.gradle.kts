@@ -51,6 +51,8 @@ android {
         compose = true
         buildConfig = true
     }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
 }
 
 dependencies {
@@ -78,4 +80,30 @@ dependencies {
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+    testImplementation("com.squareup.okhttp3:mockwebserver:5.1.0")
+    testImplementation("org.robolectric:robolectric:4.16.1")
+
+    constraints {
+        testImplementation("org.bouncycastle:bcprov-jdk18on:1.85.2") {
+            version { strictly("1.85.2") }
+            because("Robolectric's 1.81 provider has four OSV advisories; the patched 1.85 maintenance release is test-only.")
+        }
+    }
+}
+
+// Read-only resolution used by the repeatable dependency audit; never ships in the APK.
+tasks.register("validationDependencyInventory") {
+    doLast {
+        val scopes = listOf("debugRuntimeClasspath", "debugUnitTestRuntimeClasspath")
+        val json = scopes.joinToString(",", prefix = "{", postfix = "}") { scope ->
+            val coordinates = configurations.getByName(scope).resolvedConfiguration.resolvedArtifacts
+                .map { it.moduleVersion.id }
+                .map { "${it.group}:${it.name}:${it.version}" }
+                .distinct().sorted()
+            "\"$scope\":" + coordinates.joinToString(",", prefix = "[", postfix = "]") { "\"$it\"" }
+        }
+        val output = layout.buildDirectory.file("reports/validation-dependencies.json").get().asFile
+        output.parentFile.mkdirs()
+        output.writeText(json)
+    }
 }

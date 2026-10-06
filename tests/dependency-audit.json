@@ -1,0 +1,682 @@
+{
+  "schema_version": 1,
+  "queried_at_utc": "2026-10-06T02:24:37.4955125Z",
+  "database": "OSV",
+  "endpoint": "https://api.osv.dev/v1/querybatch",
+  "scopes": [
+    "debugRuntimeClasspath",
+    "debugUnitTestRuntimeClasspath minus production coordinates"
+  ],
+  "new_direct_test_dependencies": [
+    "com.squareup.okhttp3:mockwebserver:5.1.0",
+    "org.robolectric:robolectric:4.16.1"
+  ],
+  "test_only_security_constraint": "org.bouncycastle:bcprov-jdk18on:1.85.2",
+  "remediated_previous_test_coordinate": "org.bouncycastle:bcprov-jdk18on:1.81",
+  "remediated_advisory_ids": [
+    "GHSA-574f-3g2m-x479",
+    "GHSA-9pwp-9qqc-pr26",
+    "GHSA-c3fc-8qff-9hwx",
+    "GHSA-qp49-qgx5-5m26"
+  ],
+  "production_coordinate_count": 91,
+  "test_only_coordinate_count": 38,
+  "queried_coordinate_count": 129,
+  "production_flagged_coordinate_count": 0,
+  "test_only_flagged_coordinate_count": 0,
+  "query_errors": [],
+  "findings": [
+    {
+      "coordinate": "androidx.activity:activity-compose:1.12.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.activity:activity-ktx:1.12.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.activity:activity:1.12.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.annotation:annotation-experimental:1.4.1",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.annotation:annotation-jvm:1.9.1",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.arch.core:core-common:2.2.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.arch.core:core-runtime:2.2.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.autofill:autofill:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.collection:collection-jvm:1.5.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.collection:collection-ktx:1.5.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.animation:animation-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.animation:animation-core-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.foundation:foundation-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.foundation:foundation-layout-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.material:material-icons-core-android:1.7.8",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.material:material-icons-extended-android:1.7.8",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.material:material-ripple-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.material3:material3-android:1.4.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.runtime:runtime-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.runtime:runtime-annotation-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.runtime:runtime-retain-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.runtime:runtime-saveable-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-geometry-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-graphics-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-text-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-tooling-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-tooling-data-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-tooling-preview-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-unit-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.compose.ui:ui-util-android:1.11.4",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.concurrent:concurrent-futures:1.1.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.core:core-ktx:1.17.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.core:core-splashscreen:1.2.0-alpha01",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.core:core-viewtree:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.core:core:1.17.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.customview:customview-poolingcontainer:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.documentfile:documentfile:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.dynamicanimation:dynamicanimation:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.emoji2:emoji2:1.4.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.graphics:graphics-path:1.0.1",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.interpolator:interpolator:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.legacy:legacy-support-core-utils:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-common-java8:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-common-jvm:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-livedata-core:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-livedata:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-process:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-runtime-android:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-runtime-compose-android:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-viewmodel-android:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-viewmodel-compose-android:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.lifecycle:lifecycle-viewmodel:2.10.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.loader:loader:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.navigation:navigation-common-android:2.9.6",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.navigation:navigation-compose-android:2.9.6",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.navigation:navigation-runtime-android:2.9.6",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.navigationevent:navigationevent-android:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.navigationevent:navigationevent-compose-android:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.print:print:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.profileinstaller:profileinstaller:1.4.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.savedstate:savedstate-android:1.4.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.savedstate:savedstate-compose-android:1.4.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.savedstate:savedstate-ktx:1.4.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.security:security-crypto:1.1.0-alpha06",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.startup:startup-runtime:1.2.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.test:monitor:1.8.0",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.test.espresso:espresso-idling-resource:3.7.0",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.tracing:tracing:1.2.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.transition:transition:1.6.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.versionedparcelable:versionedparcelable:1.1.1",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.window:window-core-android:1.5.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "androidx.window:window:1.5.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.almworks.sqlite4java:sqlite4java:1.0.392",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.auto.value:auto-value-annotations:1.11.0",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.code.gson:gson:2.13.1",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.crypto.tink:tink-android:1.8.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.errorprone:error_prone_annotation:2.41.0",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.errorprone:error_prone_annotations:2.38.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.guava:failureaccess:1.0.3",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.guava:guava:33.4.8-jre",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.guava:listenablefuture:1.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.j2objc:j2objc-annotations:3.0.0",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.google.testparameterinjector:test-parameter-injector:1.18",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.ibm.icu:icu4j:77.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.squareup.okhttp3:logging-interceptor:5.1.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.squareup.okhttp3:mockwebserver:5.1.0",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.squareup.okhttp3:mockwebserver3:5.1.0",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.squareup.okhttp3:okhttp-android:5.1.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.squareup.okio:okio-jvm:3.15.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.squareup.retrofit2:converter-gson:3.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "com.squareup.retrofit2:retrofit:3.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "employee-wellbeing-mobile:app:unspecified",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "javax.annotation:javax.annotation-api:1.3.2",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "javax.inject:javax.inject:1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "junit:junit:4.13.2",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.bouncycastle:bcprov-jdk18on:1.85.2",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.conscrypt:conscrypt-openjdk-uber:2.5.2",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.hamcrest:hamcrest-core:1.3",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.jetbrains:annotations:23.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.jetbrains.kotlin:kotlin-stdlib:2.4.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.10.2",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.jetbrains.kotlinx:kotlinx-coroutines-test-jvm:1.10.2",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.7.3",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.jspecify:jspecify:1.0.0",
+      "scope": "production",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-commons:9.8",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.ow2.asm:asm-tree:9.8",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.ow2.asm:asm:9.8",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:annotations:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:junit:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:nativeruntime-dist-compat:1.0.18",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:nativeruntime:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:pluginapi:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:plugins-maven-dependency-resolver:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:resources:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:robolectric:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:sandbox:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:shadowapi:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:shadows-framework:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:utils-reflector:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.robolectric:utils:4.16.1",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    },
+    {
+      "coordinate": "org.yaml:snakeyaml:2.4",
+      "scope": "test_only",
+      "vulnerability_ids": []
+    }
+  ],
+  "limitations": [
+    "Known advisory lookup, not a guarantee of absence of vulnerabilities",
+    "Debug runtime artifacts; build plugins, Gradle, Android SDK, dynamically fetched Robolectric SDK image and release-only graph not audited",
+    "Advisory IDs may overlap by alias; do not interpret IDs as distinct CVEs",
+    "Production dependency versions unchanged; only test dependencies added",
+    "Metadata calls to OSV only; no application providers contacted"
+  ]
+}

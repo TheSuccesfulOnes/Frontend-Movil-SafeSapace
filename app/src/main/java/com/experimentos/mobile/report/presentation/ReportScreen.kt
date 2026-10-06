@@ -86,6 +86,19 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+internal fun reportTitleInput(value: String): String = value.take(160)
+internal fun reportDescriptionInput(value: String): String = value.take(2000)
+internal fun reportValidationError(category: String, title: String, description: String, priority: String): String? = when {
+    category.isBlank() -> "Selecciona tu puesto de trabajo."
+    title.isBlank() -> "Escribe un título para identificar el reporte."
+    description.isBlank() -> "Describe brevemente lo que ocurrió."
+    priority.isBlank() -> "Selecciona el nivel de prioridad."
+    else -> null
+}
+
+internal fun canSubmitReport(category: String, title: String, description: String, priority: String, submitting: Boolean): Boolean =
+    !submitting && reportValidationError(category, title, description, priority) == null
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateReportScreen(
@@ -118,13 +131,7 @@ fun CreateReportScreen(
     var validationError by remember { mutableStateOf<String?>(null) }
 
     fun submitReport() {
-        val error = when {
-            category.isBlank() -> "Selecciona tu puesto de trabajo."
-            title.isBlank() -> "Escribe un título para identificar el reporte."
-            description.isBlank() -> "Describe brevemente lo que ocurrió."
-            priority.isBlank() -> "Selecciona el nivel de prioridad."
-            else -> null
-        }
+        val error = reportValidationError(category, title, description, priority)
 
         if (error != null) {
             showValidation = true
@@ -224,7 +231,7 @@ fun CreateReportScreen(
                     OutlinedTextField(
                         value = title,
                         onValueChange = {
-                            title = it.take(160)
+                            title = reportTitleInput(it)
                             showValidation = false
                             validationError = null
                         },
@@ -245,7 +252,7 @@ fun CreateReportScreen(
                     OutlinedTextField(
                         value = description,
                         onValueChange = {
-                            description = it.take(2000)
+                            description = reportDescriptionInput(it)
                             showValidation = false
                             validationError = null
                         },
@@ -369,11 +376,7 @@ fun CreateReportScreen(
                     }
                     Button(
                         onClick = ::submitReport,
-                        enabled = !state.isSubmitting &&
-                            category.isNotBlank() &&
-                            title.isNotBlank() &&
-                            description.isNotBlank() &&
-                            priority.isNotBlank(),
+                        enabled = canSubmitReport(category, title, description, priority, state.isSubmitting),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = MaterialTheme.colorScheme.primary,
                         ),

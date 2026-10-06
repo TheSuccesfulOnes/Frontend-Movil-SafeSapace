@@ -21,19 +21,8 @@ data class Session(
 }
 
 /** Stores the minimum session data using Android Keystore-backed encryption. */
-class SessionStore(private val context: Context) {
-    private val preferences by lazy {
-        val masterKey = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-        EncryptedSharedPreferences.create(
-            context,
-            "secure_session",
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
-        )
-    }
+class SessionStore internal constructor(private val preferences: android.content.SharedPreferences) {
+    constructor(context: Context) : this(encryptedPreferences(context))
 
     private val mutableSession = MutableStateFlow(readSession())
     val session: StateFlow<Session?> = mutableSession.asStateFlow()
@@ -90,6 +79,16 @@ class SessionStore(private val context: Context) {
     }
 
     private companion object {
+        fun encryptedPreferences(context: Context): android.content.SharedPreferences {
+            val masterKey = MasterKey.Builder(context)
+                .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                .build()
+            return EncryptedSharedPreferences.create(
+                context, "secure_session", masterKey,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
+            )
+        }
         const val USER_ID_KEY = "user_id"
         const val TOKEN_KEY = "access_token"
         const val USERNAME_KEY = "username"
