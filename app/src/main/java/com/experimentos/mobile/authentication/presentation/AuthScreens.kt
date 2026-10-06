@@ -18,10 +18,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -59,6 +59,7 @@ import com.experimentos.mobile.authentication.domain.DefaultAuthRepository
 import com.experimentos.mobile.authentication.domain.RegistrationPasswordPolicy
 import com.experimentos.mobile.shared.data.LegalLinks
 import com.experimentos.mobile.shared.data.SessionStore
+import com.experimentos.mobile.shared.designsystem.success
 import com.experimentos.mobile.shared.presentation.BrandEmblem
 import com.experimentos.mobile.shared.presentation.InlineError
 import com.experimentos.mobile.shared.presentation.LocalAppStrings
@@ -219,9 +220,9 @@ fun RegisterScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            imageVector = if (met) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                            imageVector = if (met) Icons.Default.CheckCircle else Icons.Default.Cancel,
                             contentDescription = null,
-                            tint = if (met) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                            tint = if (met) MaterialTheme.colorScheme.success else MaterialTheme.colorScheme.error,
                             modifier = Modifier.size(18.dp),
                         )
                         Text(strings.t(label), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
