@@ -204,30 +204,32 @@ fun RegisterScreen(
             passwordVisible = showPassword,
             onPasswordVisibilityChange = { showPassword = !showPassword },
         )
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
-            verticalArrangement = Arrangement.spacedBy(5.dp),
-        ) {
-            Text(strings.t("Tu contraseña debe incluir:"), style = MaterialTheme.typography.bodySmall)
-            RegistrationPasswordPolicy.requirements(password).forEach { (label, met) ->
-                Row(
-                    modifier = Modifier.semantics(mergeDescendants = true) {
-                        stateDescription = strings.t(if (met) "Cumplido" else "Pendiente")
-                    },
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        imageVector = if (met) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
-                        contentDescription = null,
-                        tint = if (met) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.size(18.dp),
-                    )
-                    Text(strings.t(label), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (password.isNotEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+                verticalArrangement = Arrangement.spacedBy(5.dp),
+            ) {
+                Text(strings.t("Tu contraseña debe incluir:"), style = MaterialTheme.typography.bodySmall)
+                RegistrationPasswordPolicy.requirements(password).forEach { (label, met) ->
+                    Row(
+                        modifier = Modifier.semantics(mergeDescendants = true) {
+                            stateDescription = strings.t(if (met) "Cumplido" else "Pendiente")
+                        },
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Icon(
+                            imageVector = if (met) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                            contentDescription = null,
+                            tint = if (met) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(18.dp),
+                        )
+                        Text(strings.t(label), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
                 }
-            }
-            if (password.toByteArray(Charsets.UTF_8).size > 72) {
-                Text(strings.t(RegistrationPasswordPolicy.TOO_LONG_MESSAGE), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                if (password.toByteArray(Charsets.UTF_8).size > 72) {
+                    Text(strings.t(RegistrationPasswordPolicy.TOO_LONG_MESSAGE), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                }
             }
         }
         Spacer(Modifier.height(14.dp))
