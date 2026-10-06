@@ -73,6 +73,9 @@ class AppStrings(val language: AppLanguage) {
         message == "El nombre visible debe tener entre 2 y 100 caracteres." ->
             "The display name must be between 2 and 100 characters."
         message == "Las contraseñas no coinciden." -> "Passwords do not match."
+        message == "Incluye al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial." ->
+            "Include at least 8 characters, an uppercase letter, a lowercase letter, a number and a special character."
+        message == "La contraseña es demasiado larga. Usa menos caracteres." -> "The password is too long. Use fewer characters."
         message == "La contraseña debe tener al menos 8 caracteres." -> "The password must contain at least 8 characters."
         message == "El enlace de recuperación no es válido o ya expiró. Solicita uno nuevo." ->
             "The recovery link is invalid or has expired. Request a new one."
@@ -151,6 +154,20 @@ class AppStrings(val language: AppLanguage) {
             "Correo electrónico" to "Email address",
             "ej. carlos@empresa.com" to "e.g. carlos@company.com",
             "Mínimo 8 caracteres" to "At least 8 characters",
+            "Tu contraseña debe incluir:" to "Your password must include:",
+            "Al menos 8 caracteres" to "At least 8 characters",
+            "Una letra mayúscula" to "One uppercase letter",
+            "Una letra minúscula" to "One lowercase letter",
+            "Un número" to "One number",
+            "Un carácter especial, como !, @ o #" to "One special character, such as !, @ or #",
+            "Cumplido" to "Met",
+            "Pendiente" to "Pending",
+            "Las contraseñas no coinciden." to "Passwords do not match.",
+            "La contraseña es demasiado larga. Usa menos caracteres." to "The password is too long. Use fewer characters.",
+            "Al registrarte aceptas nuestra política de privacidad." to "By registering you accept our privacy policy.",
+            "Leer la política de privacidad y seguridad" to "Read the privacy and security policy",
+            "Se abre en el navegador" to "Opens in your browser",
+            "No se pudo abrir la política. Intenta nuevamente." to "Could not open the policy. Try again.",
             "Confirmar contraseña" to "Confirm password",
             "Repite tu contraseña" to "Repeat your password",
             "Creando cuenta…" to "Creating account…",

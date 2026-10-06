@@ -24,6 +24,8 @@ private fun HttpException.apiValidationMessage(): String {
         message.contains("username is already") -> "El nombre de usuario ya está utilizado."
         message.contains("email is already") -> "El correo electrónico ya está utilizado."
         message.contains("passwords do not match") -> "Las contraseñas no coinciden."
+        message.contains("special character") -> com.experimentos.mobile.authentication.domain.RegistrationPasswordPolicy.REQUIREMENTS_MESSAGE
+        message.contains("password exceeds") -> com.experimentos.mobile.authentication.domain.RegistrationPasswordPolicy.TOO_LONG_MESSAGE
         message.contains("at least 8 characters") -> "La contraseña debe tener al menos 8 caracteres."
         message.contains("invalid credentials") -> "El usuario o la contraseña no son válidos."
         message.contains("invalid or expired reset token") ->

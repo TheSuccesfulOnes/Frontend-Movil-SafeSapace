@@ -16,9 +16,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -41,6 +44,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -50,6 +56,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.experimentos.mobile.authentication.data.AuthApi
 import com.experimentos.mobile.authentication.domain.DefaultAuthRepository
+import com.experimentos.mobile.authentication.domain.RegistrationPasswordPolicy
+import com.experimentos.mobile.shared.data.LegalLinks
 import com.experimentos.mobile.shared.data.SessionStore
 import com.experimentos.mobile.shared.presentation.BrandEmblem
 import com.experimentos.mobile.shared.presentation.InlineError
@@ -127,6 +135,8 @@ fun RegisterScreen(
     onBackToLogin: () -> Unit,
 ) {
     val strings = LocalAppStrings.current
+    val uriHandler = LocalUriHandler.current
+    var policyOpenError by remember { mutableStateOf(false) }
     val viewModel: AuthViewModel = viewModel(
         factory = AuthViewModelFactory(DefaultAuthRepository(api), sessionStore),
     )
@@ -184,7 +194,7 @@ fun RegisterScreen(
         Spacer(Modifier.height(14.dp))
         AuthTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = { password = it; viewModel.clearMessage() },
             label = strings.t("Contraseña"),
             placeholder = strings.t("Mínimo 8 caracteres"),
             icon = Icons.Default.Lock,
@@ -194,10 +204,36 @@ fun RegisterScreen(
             passwordVisible = showPassword,
             onPasswordVisibilityChange = { showPassword = !showPassword },
         )
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(top = 10.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+        ) {
+            Text(strings.t("Tu contraseña debe incluir:"), style = MaterialTheme.typography.bodySmall)
+            RegistrationPasswordPolicy.requirements(password).forEach { (label, met) ->
+                Row(
+                    modifier = Modifier.semantics(mergeDescendants = true) {
+                        stateDescription = strings.t(if (met) "Cumplido" else "Pendiente")
+                    },
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        imageVector = if (met) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                        contentDescription = null,
+                        tint = if (met) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Text(strings.t(label), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            if (password.toByteArray(Charsets.UTF_8).size > 72) {
+                Text(strings.t(RegistrationPasswordPolicy.TOO_LONG_MESSAGE), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            }
+        }
         Spacer(Modifier.height(14.dp))
         AuthTextField(
             value = confirmation,
-            onValueChange = { confirmation = it },
+            onValueChange = { confirmation = it; viewModel.clearMessage() },
             label = strings.t("Confirmar contraseña"),
             placeholder = strings.t("Repite tu contraseña"),
             icon = Icons.Default.Lock,
@@ -207,6 +243,9 @@ fun RegisterScreen(
             passwordVisible = showConfirmation,
             onPasswordVisibilityChange = { showConfirmation = !showConfirmation },
         )
+        if (confirmation.isNotEmpty() && password != confirmation) {
+            Text(strings.t("Las contraseñas no coinciden."), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+        }
         Spacer(Modifier.height(22.dp))
         Button(
             onClick = { viewModel.register(displayName, username, email, password, confirmation) },
@@ -217,12 +256,23 @@ fun RegisterScreen(
             Text(strings.t(if (state.isLoading) "Creando cuenta…" else "Registrar cuenta"))
         }
         Text(
-            strings.t("Al registrarte aceptas nuestras condiciones de uso y política de privacidad."),
+            strings.t("Al registrarte aceptas nuestra política de privacidad."),
             modifier = Modifier.padding(top = 12.dp),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
-        state.errorMessage?.let { InlineError(it) }
+        TextButton(
+            onClick = {
+                policyOpenError = runCatching { uriHandler.openUri(LegalLinks.PRIVACY_POLICY) }.isFailure
+            },
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(strings.t("Leer la política de privacidad y seguridad"), modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelLarge)
+            Icon(Icons.AutoMirrored.Filled.OpenInNew, contentDescription = strings.t("Se abre en el navegador"), modifier = Modifier.size(18.dp))
+        }
+        if (policyOpenError) InlineError(strings.t("No se pudo abrir la política. Intenta nuevamente."))
+        state.errorMessage?.takeUnless { it == "Las contraseñas no coinciden." && confirmation.isNotEmpty() && password != confirmation }
+            ?.let { InlineError(it) }
         Spacer(Modifier.height(10.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.experimentos.mobile.authentication.data.RegisterRequest
 import com.experimentos.mobile.authentication.domain.AuthRepository
+import com.experimentos.mobile.authentication.domain.RegistrationPasswordPolicy
 import com.experimentos.mobile.shared.data.SessionStore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,6 +48,8 @@ class AuthViewModel(
         password: String,
         confirmation: String,
     ) {
+        if (mutableState.value.isLoading) return
+        val passwordError = RegistrationPasswordPolicy.validationError(password)
         when {
             displayName.isBlank() || username.isBlank() || email.isBlank() ||
                 password.isBlank() || confirmation.isBlank() -> {
@@ -60,8 +63,8 @@ class AuthViewModel(
             password != confirmation -> {
                 mutableState.value = AuthUiState(errorMessage = "Las contraseñas no coinciden.")
             }
-            password.length < 8 -> {
-                mutableState.value = AuthUiState(errorMessage = "La contraseña debe tener al menos 8 caracteres.")
+            passwordError != null -> {
+                mutableState.value = AuthUiState(errorMessage = passwordError)
             }
             else -> viewModelScope.launch {
                 mutableState.value = AuthUiState(isLoading = true)
