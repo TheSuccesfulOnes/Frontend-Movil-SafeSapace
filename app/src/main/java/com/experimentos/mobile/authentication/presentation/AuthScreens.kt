@@ -45,8 +45,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -86,6 +88,7 @@ fun LoginScreen(
     ) {
         AuthTextField(
             value = identifier,
+            modifier = Modifier.testTag("mobile-login-identifier"),
             onValueChange = { identifier = it },
             label = strings.t("Usuario o correo"),
             placeholder = strings.t("ej. carlos o carlos@empresa.com"),
@@ -96,6 +99,7 @@ fun LoginScreen(
         Spacer(Modifier.height(14.dp))
         AuthTextField(
             value = password,
+            modifier = Modifier.testTag("mobile-login-password"),
             onValueChange = { password = it },
             label = strings.t("Contraseña"),
             placeholder = strings.t("Escribe tu contraseña"),
@@ -109,7 +113,7 @@ fun LoginScreen(
         Spacer(Modifier.height(12.dp))
         Button(
             onClick = { viewModel.login(identifier, password) },
-            modifier = Modifier.fillMaxWidth().height(52.dp),
+            modifier = Modifier.fillMaxWidth().height(52.dp).testTag("mobile-login-submit"),
             enabled = !state.isLoading,
             shape = MaterialTheme.shapes.small,
         ) {
@@ -297,6 +301,7 @@ private fun AuthLayout(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .semantics { testTagsAsResourceId = true }
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp, vertical = 30.dp),
@@ -338,6 +343,7 @@ private fun AuthTextField(
     label: String,
     placeholder: String,
     icon: ImageVector,
+    modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
     isPassword: Boolean = false,
@@ -348,7 +354,7 @@ private fun AuthTextField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         label = { Text(label) },
         placeholder = { Text(placeholder) },
         leadingIcon = { Icon(icon, contentDescription = null) },

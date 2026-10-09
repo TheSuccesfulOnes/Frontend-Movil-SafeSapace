@@ -1,5 +1,17 @@
 # Mobile validation tests
 
+## Native login automation selectors
+
+The login uses Compose tags exposed through `testTagsAsResourceId` on the auth layout. Locate these exact resource names with UiAutomator or Appium's UiAutomator2 driver:
+
+| Element | Resource name |
+| --- | --- |
+| Username or email | `mobile-login-identifier` |
+| Password | `mobile-login-password` |
+| Submit | `mobile-login-submit` |
+
+Use the tag as the resource name; do not prepend `com.experimentos.mobile:id/`. This follows the [Compose interoperability contract](https://developer.android.com/develop/ui/compose/testing/interoperability). Selenium IDE exercises browser pages; the native Android screen needs a native driver. The translated labels remain available to accessibility services and no sensitive field value is included in a tag.
+
 Run from this repository in PowerShell:
 
 ```powershell
@@ -7,6 +19,8 @@ Run from this repository in PowerShell:
 ```
 
 The runner uses the Android Studio JDK at `C:\Program Files\Android\Android Studio\jbr` and creates/reuses `M:` for this repository. It refuses to overwrite another mapping or occupied drive. Use `-Drive N:` for an unused alternative. Mappings are retained for review, and no other mappings are removed. The short ASCII path avoids Kotlin/Gradle worker classpath failures caused by the original path's spaces/accent. `.kotlin/` is already ignored.
+
+ProfileFormValidationTest explicitly uses Robolectric's legacy graphics and SQLite modes. Its scope is form validation and Android email patterns, with no rendering or SQLite access. This avoids loading an unnecessary native runtime DLL that Windows Application Control blocked during the first audit. No OS security policy is changed and all existing validation cases remain enabled.
 
 Equivalent build/test/check command after confirming the mapping:
 
