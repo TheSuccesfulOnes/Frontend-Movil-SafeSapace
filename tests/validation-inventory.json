@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at_utc": "2026-10-06T02:26:54.3975720Z",
-  "command": "gradlew -p M:\\ :app:testDebugUnitTest --rerun :app:assembleDebug :app:lintDebug :app:validationDependencyInventory --console=plain",
+  "generated_at_utc": "2026-10-09T23:32:27.7680787Z",
+  "command": "gradlew -p M:\\ :app:testDebugUnitTest :app:assembleDebug :app:lintDebug :app:validationDependencyInventory --console=plain",
   "command_exit_code": 0,
   "source_files_scanned": 51,
   "minimum_cases_per_owner": 20,

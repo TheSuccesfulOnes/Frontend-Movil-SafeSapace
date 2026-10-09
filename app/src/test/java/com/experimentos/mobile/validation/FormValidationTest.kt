@@ -12,9 +12,15 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
+import org.robolectric.annotation.SQLiteMode
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 @Config(manifest = Config.NONE, sdk = [35], application = android.app.Application::class)
+// These fixtures exercise Android email patterns; they do not render graphics or use SQLite.
+@GraphicsMode(GraphicsMode.Mode.LEGACY)
+@Suppress("DEPRECATION") // Legacy SQLite is scoped to these validation fixtures, not database tests.
+@SQLiteMode(SQLiteMode.Mode.LEGACY)
 class ProfileFormValidationTest(scenario: Scenario) : ScenarioTest(scenario) {
     companion object {
         @JvmStatic @ParameterizedRobolectricTestRunner.Parameters(name = "{0}") fun cases() = rows(
